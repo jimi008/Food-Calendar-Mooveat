@@ -1,0 +1,15 @@
+
+/* WP Google Map Plugin */
+
+.wpgmp-overview{
+  .group_marker{
+    img{
+      width: 30px;
+    }
+  }
+  img{
+    &.selected_image{
+      max-width: 30px;
+    }
+  }
+}

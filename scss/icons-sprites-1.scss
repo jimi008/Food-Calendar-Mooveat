@@ -1,0 +1,119 @@
+$icons-path: '/wp-content/themes/mooveat/images/icones/';
+
+$colNumber : 5;
+$lineNumber : 5;
+
+@mixin stitches-mooveat($x: 0, $y: 0, $width: 0, $height: 0) {
+  #main &{
+    background-position: $x/2 $y/2;
+    width: $width/2;
+    height: $height/2;
+    background-size: $colNumber*200/2+px $lineNumber*200/2+px;
+    background-image: url($icons-path + 'spritesheet-mooveat-1.png');
+    background-repeat: no-repeat;
+    display: block;
+    &.small-icon{
+      background-position: $x/4 $y/4;
+      width: $width/4;
+      height: $height/4;
+      background-size: $colNumber*200/4+px $lineNumber*200/4+px;
+    }
+  }
+}
+
+.mooveat-aromate {
+  @include stitches-mooveat(0, 0, 200px, 200px);
+}
+
+.mooveat-biere {
+  @include stitches-mooveat(-200px, 0, 200px, 200px);
+}
+
+.mooveat-bon-plan {
+  @include stitches-mooveat(-400px, 0, 200px, 200px);
+}
+
+.mooveat-boutique {
+  @include stitches-mooveat(-600px, 0, 200px, 200px);
+}
+
+.mooveat-cereale {
+  @include stitches-mooveat(0, -200px, 200px, 200px);
+}
+
+.mooveat-champagne {
+  @include stitches-mooveat(-200px, -200px, 200px, 200px);
+}
+
+.mooveat-champignon {
+  @include stitches-mooveat(-400px, -200px, 200px, 200px);
+}
+
+.mooveat-charcuterie {
+  @include stitches-mooveat(-600px, -200px, 200px, 200px);
+}
+
+.mooveat-cidre {
+  @include stitches-mooveat(0, -400px, 200px, 200px);
+}
+
+.mooveat-commander {
+  @include stitches-mooveat(-200px, -400px, 200px, 200px);
+}
+
+.mooveat-confiserie {
+  @include stitches-mooveat(-400px, -400px, 200px, 200px);
+}
+
+.mooveat-confiture {
+  @include stitches-mooveat(-600px, -400px, 200px, 200px);
+}
+
+.mooveat-conserve {
+  @include stitches-mooveat(0, -600px, 200px, 200px);
+}
+
+.mooveat-coquillage {
+  @include stitches-mooveat(-200px, -600px, 200px, 200px);
+}
+
+.mooveat-creme-fraiche {
+  @include stitches-mooveat(-400px, -600px, 200px, 200px);
+}
+
+.mooveat-creme-glacee {
+  @include stitches-mooveat(-600px, -600px, 200px, 200px);
+}
+
+.mooveat-crustace {
+  @include stitches-mooveat(-800px, 0, 200px, 200px);
+}
+
+.mooveat-cueillette {
+  @include stitches-mooveat(-800px, -200px, 200px, 200px);
+}
+
+.mooveat-cuisinier-01 {
+  @include stitches-mooveat(-800px, -400px, 200px, 200px);
+}
+
+.mooveat-cuisinier-02 {
+  @include stitches-mooveat(-800px, -600px, 200px, 200px);
+}
+
+.mooveat-cuisinier-03 {
+  @include stitches-mooveat(0, -800px, 200px, 200px);
+}
+
+.mooveat-cuisinier-04 {
+  @include stitches-mooveat(-200px, -800px, 200px, 200px);
+}
+
+.mooveat-cuisinier-05 {
+  @include stitches-mooveat(-400px, -800px, 200px, 200px);
+}
+
+.mooveat-cuisinier-06 {
+  @include stitches-mooveat(-600px, -800px, 200px, 200px);
+}
+

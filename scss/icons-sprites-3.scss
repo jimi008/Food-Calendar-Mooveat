@@ -1,0 +1,78 @@
+$icons-path: '/wp-content/themes/mooveat/images/icones/';
+
+$colNumber : 4;
+$lineNumber : 4;
+
+@mixin stitches-mooveat($x: 0, $y: 0, $width: 0, $height: 0) {
+  #main &{
+    background-position: $x/2 $y/2;
+    width: $width/2;
+    height: $height/2;
+    background-size: $colNumber*200/2+px $lineNumber*200/2+px;
+    background-image: url($icons-path + 'spritesheet-mooveat-3.png');
+    background-repeat: no-repeat;
+    display: block;
+    &.small-icon{
+      background-position: $x/4 $y/4;
+      width: $width/4;
+      height: $height/4;
+      background-size: $colNumber*200/4+px $lineNumber*200/4+px;
+    }
+  }
+}
+
+.mooveat-poisson {
+  @include stitches-mooveat(0, 0, 200px, 200px);
+}
+
+.mooveat-producteur {
+  @include stitches-mooveat(-200px, 0, 200px, 200px);
+}
+
+.mooveat-restaurant {
+  @include stitches-mooveat(-400px, 0, 200px, 200px);
+}
+
+.mooveat-sauce {
+  @include stitches-mooveat(0, -200px, 200px, 200px);
+}
+
+.mooveat-sirop {
+  @include stitches-mooveat(-200px, -200px, 200px, 200px);
+}
+
+.mooveat-soupe {
+  @include stitches-mooveat(-400px, -200px, 200px, 200px);
+}
+
+.mooveat-spiritueux {
+  @include stitches-mooveat(0, -400px, 200px, 200px);
+}
+
+.mooveat-tisane {
+  @include stitches-mooveat(-200px, -400px, 200px, 200px);
+}
+
+.mooveat-truffe {
+  @include stitches-mooveat(-400px, -400px, 200px, 200px);
+}
+
+.mooveat-utilisateur {
+  @include stitches-mooveat(-600px, 0, 200px, 200px);
+}
+
+.mooveat-viande {
+  @include stitches-mooveat(-600px, -200px, 200px, 200px);
+}
+
+.mooveat-vin {
+  @include stitches-mooveat(-600px, -400px, 200px, 200px);
+}
+
+.mooveat-volail {
+  @include stitches-mooveat(0, -600px, 200px, 200px);
+}
+
+.mooveat-yaourt {
+  @include stitches-mooveat(-200px, -600px, 200px, 200px);
+}

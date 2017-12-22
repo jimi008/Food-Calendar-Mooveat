@@ -1,0 +1,197 @@
+#main .mooveat-poisson {
+  background-position: 0 0;
+  width: 100px;
+  height: 100px;
+  background-size: 400px 400px;
+  background-image: url("/wp-content/themes/mooveat/images/icones/spritesheet-mooveat-3.png");
+  background-repeat: no-repeat;
+  display: block; }
+  #main .mooveat-poisson.small-icon {
+    background-position: 0 0;
+    width: 50px;
+    height: 50px;
+    background-size: 200px 200px; }
+
+#main .mooveat-producteur {
+  background-position: -100px 0;
+  width: 100px;
+  height: 100px;
+  background-size: 400px 400px;
+  background-image: url("/wp-content/themes/mooveat/images/icones/spritesheet-mooveat-3.png");
+  background-repeat: no-repeat;
+  display: block; }
+  #main .mooveat-producteur.small-icon {
+    background-position: -50px 0;
+    width: 50px;
+    height: 50px;
+    background-size: 200px 200px; }
+
+#main .mooveat-restaurant {
+  background-position: -200px 0;
+  width: 100px;
+  height: 100px;
+  background-size: 400px 400px;
+  background-image: url("/wp-content/themes/mooveat/images/icones/spritesheet-mooveat-3.png");
+  background-repeat: no-repeat;
+  display: block; }
+  #main .mooveat-restaurant.small-icon {
+    background-position: -100px 0;
+    width: 50px;
+    height: 50px;
+    background-size: 200px 200px; }
+
+#main .mooveat-sauce {
+  background-position: 0 -100px;
+  width: 100px;
+  height: 100px;
+  background-size: 400px 400px;
+  background-image: url("/wp-content/themes/mooveat/images/icones/spritesheet-mooveat-3.png");
+  background-repeat: no-repeat;
+  display: block; }
+  #main .mooveat-sauce.small-icon {
+    background-position: 0 -50px;
+    width: 50px;
+    height: 50px;
+    background-size: 200px 200px; }
+
+#main .mooveat-sirop {
+  background-position: -100px -100px;
+  width: 100px;
+  height: 100px;
+  background-size: 400px 400px;
+  background-image: url("/wp-content/themes/mooveat/images/icones/spritesheet-mooveat-3.png");
+  background-repeat: no-repeat;
+  display: block; }
+  #main .mooveat-sirop.small-icon {
+    background-position: -50px -50px;
+    width: 50px;
+    height: 50px;
+    background-size: 200px 200px; }
+
+#main .mooveat-soupe {
+  background-position: -200px -100px;
+  width: 100px;
+  height: 100px;
+  background-size: 400px 400px;
+  background-image: url("/wp-content/themes/mooveat/images/icones/spritesheet-mooveat-3.png");
+  background-repeat: no-repeat;
+  display: block; }
+  #main .mooveat-soupe.small-icon {
+    background-position: -100px -50px;
+    width: 50px;
+    height: 50px;
+    background-size: 200px 200px; }
+
+#main .mooveat-spiritueux {
+  background-position: 0 -200px;
+  width: 100px;
+  height: 100px;
+  background-size: 400px 400px;
+  background-image: url("/wp-content/themes/mooveat/images/icones/spritesheet-mooveat-3.png");
+  background-repeat: no-repeat;
+  display: block; }
+  #main .mooveat-spiritueux.small-icon {
+    background-position: 0 -100px;
+    width: 50px;
+    height: 50px;
+    background-size: 200px 200px; }
+
+#main .mooveat-tisane {
+  background-position: -100px -200px;
+  width: 100px;
+  height: 100px;
+  background-size: 400px 400px;
+  background-image: url("/wp-content/themes/mooveat/images/icones/spritesheet-mooveat-3.png");
+  background-repeat: no-repeat;
+  display: block; }
+  #main .mooveat-tisane.small-icon {
+    background-position: -50px -100px;
+    width: 50px;
+    height: 50px;
+    background-size: 200px 200px; }
+
+#main .mooveat-truffe {
+  background-position: -200px -200px;
+  width: 100px;
+  height: 100px;
+  background-size: 400px 400px;
+  background-image: url("/wp-content/themes/mooveat/images/icones/spritesheet-mooveat-3.png");
+  background-repeat: no-repeat;
+  display: block; }
+  #main .mooveat-truffe.small-icon {
+    background-position: -100px -100px;
+    width: 50px;
+    height: 50px;
+    background-size: 200px 200px; }
+
+#main .mooveat-utilisateur {
+  background-position: -300px 0;
+  width: 100px;
+  height: 100px;
+  background-size: 400px 400px;
+  background-image: url("/wp-content/themes/mooveat/images/icones/spritesheet-mooveat-3.png");
+  background-repeat: no-repeat;
+  display: block; }
+  #main .mooveat-utilisateur.small-icon {
+    background-position: -150px 0;
+    width: 50px;
+    height: 50px;
+    background-size: 200px 200px; }
+
+#main .mooveat-viande {
+  background-position: -300px -100px;
+  width: 100px;
+  height: 100px;
+  background-size: 400px 400px;
+  background-image: url("/wp-content/themes/mooveat/images/icones/spritesheet-mooveat-3.png");
+  background-repeat: no-repeat;
+  display: block; }
+  #main .mooveat-viande.small-icon {
+    background-position: -150px -50px;
+    width: 50px;
+    height: 50px;
+    background-size: 200px 200px; }
+
+#main .mooveat-vin {
+  background-position: -300px -200px;
+  width: 100px;
+  height: 100px;
+  background-size: 400px 400px;
+  background-image: url("/wp-content/themes/mooveat/images/icones/spritesheet-mooveat-3.png");
+  background-repeat: no-repeat;
+  display: block; }
+  #main .mooveat-vin.small-icon {
+    background-position: -150px -100px;
+    width: 50px;
+    height: 50px;
+    background-size: 200px 200px; }
+
+#main .mooveat-volail {
+  background-position: 0 -300px;
+  width: 100px;
+  height: 100px;
+  background-size: 400px 400px;
+  background-image: url("/wp-content/themes/mooveat/images/icones/spritesheet-mooveat-3.png");
+  background-repeat: no-repeat;
+  display: block; }
+  #main .mooveat-volail.small-icon {
+    background-position: 0 -150px;
+    width: 50px;
+    height: 50px;
+    background-size: 200px 200px; }
+
+#main .mooveat-yaourt {
+  background-position: -100px -300px;
+  width: 100px;
+  height: 100px;
+  background-size: 400px 400px;
+  background-image: url("/wp-content/themes/mooveat/images/icones/spritesheet-mooveat-3.png");
+  background-repeat: no-repeat;
+  display: block; }
+  #main .mooveat-yaourt.small-icon {
+    background-position: -50px -150px;
+    width: 50px;
+    height: 50px;
+    background-size: 200px 200px; }
+
+/*# sourceMappingURL=icons-sprites-3.css.map */

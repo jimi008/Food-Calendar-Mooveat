@@ -1,0 +1,247 @@
+/*
+* imports
+*/
+/* -------------------------------------------------------------
+  Sass CSS3 Mixins! The Cross-Browser CSS3 Sass Library
+  By: Matthieu Aussaguel, http://www.mynameismatthieu.com, @matthieu_tweets
+------------------------------------------------------------- */
+/* 4 column Gravity Forms custom ready class ------------------------------------------------------*/
+.gform_wrapper .top_label li.gfield.gf_first_quarter,
+.gform_wrapper .top_label li.gfield.gf_second_quarter,
+.gform_wrapper .top_label li.gfield.gf_third_quarter,
+.gform_wrapper .top_label li.gfield.gf_fourth_quarter {
+  margin: 0 0 8px 0;
+  width: 24%; }
+
+.gform_wrapper .top_label li.gfield.gfield_error.gf_first_quarter,
+.gform_wrapper .top_label li.gfield.gfield_error.gf_second_quarter,
+.gform_wrapper .top_label li.gfield.gfield_error.gf_third_quarter {
+  width: 21%; }
+
+.gform_wrapper .top_label li.gfield.gfield_error.gf_third_quarter {
+  margin-right: 1%; }
+
+.gform_wrapper .top_label li.gfield.gf_first_quarter {
+  float: left;
+  clear: left !important; }
+
+.gform_wrapper .top_label li.gfield.gf_second_quarter,
+.gform_wrapper .top_label li.gfield.gf_third_quarter,
+.gform_wrapper .top_label li.gfield.gf_fourth_quarter {
+  float: left;
+  margin-left: 2%;
+  clear: none !important; }
+
+.gform_wrapper .top_label li.gfield.gfield_error.gf_second_quarter,
+.gform_wrapper .top_label li.gfield.gfield_error.gf_third_quarter {
+  margin-left: 3%; }
+
+.gform_wrapper .top_label li.gfield.gf_first_quarter input.medium,
+.gform_wrapper .top_label li.gfield.gf_first_quarter input.large,
+.gform_wrapper .top_label li.gfield.gf_first_quarter select.medium,
+.gform_wrapper .top_label li.gfield.gf_first_quarter select.large,
+.gform_wrapper .top_label li.gfield.gf_second_quarter input.medium,
+.gform_wrapper .top_label li.gfield.gf_second_quarter input.large,
+.gform_wrapper .top_label li.gfield.gf_second_quarter select.medium,
+.gform_wrapper .top_label li.gfield.gf_second_quarter select.large,
+.gform_wrapper .top_label li.gfield.gf_third_quarter input.medium,
+.gform_wrapper .top_label li.gfield.gf_third_quarter input.large,
+.gform_wrapper .top_label li.gfield.gf_third_quarter select.medium,
+.gform_wrapper .top_label li.gfield.gf_third_quarter select.large,
+.gform_wrapper .top_label li.gfield.gf_fourth_quarter input.medium,
+.gform_wrapper .top_label li.gfield.gf_fourth_quarter input.large,
+.gform_wrapper .top_label li.gfield.gf_fourth_quarter select.medium,
+.gform_wrapper .top_label li.gfield.gf_fourth_quarter select.large {
+  width: 95%; }
+
+.gform_wrapper .top_label li.gfield.gf_first_quarter + li.gsection,
+.gform_wrapper .top_label li.gfield.gf_third_quarter + li.gsection {
+  padding: 16px 0 8px 0; }
+
+.gform_wrapper .top_label li.gfield.gf_first_quarter + li.gfield,
+.gform_wrapper .top_label li.gfield.gf_second_quarter + li.gfield,
+.gform_wrapper .top_label li.gfield.gf_third_quarter + li.gfield,
+.gform_wrapper .top_label li.gfield.gf_fourth_quarter + li.gfield {
+  clear: both; }
+
+.gform_wrapper .top_label li.gfield.gf_first_quarter + .gform_footer,
+.gform_wrapper .top_label li.gfield.gf_second_quarter + .gform_footer,
+.gform_wrapper .top_label li.gfield.gf_third_quarter + .gform_footer,
+.gform_wrapper .top_label li.gfield.gf_fourth_quarter + .gform_footer {
+  clear: both; }
+
+/* contribution by gogrw------------------------------------------------------*/
+@media only screen and (max-width: 550px), only screen and (max-device-width: 550px) {
+  .gform_wrapper .top_label li.gfield.gf_first_quarter,
+  .gform_wrapper .top_label li.gfield.gf_second_quarter,
+  .gform_wrapper .top_label li.gfield.gf_third_quarter,
+  .gform_wrapper .top_label li.gfield.gf_fourth_quarter {
+    margin: 0 0 0 0 !important;
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important; } }
+/**********************************************************************************************************
+ * main variables
+ */
+.page-template-page-gravityform #masthead {
+  max-width: 1200px;
+  margin: auto; }
+.page-template-page-gravityform .site-branding {
+  display: inline-block;
+  margin-right: 20px; }
+.page-template-page-gravityform .main-navigation {
+  float: right;
+  display: inline-block;
+  vertical-align: middle;
+  width: auto; }
+  .page-template-page-gravityform .main-navigation .home-menu-entry {
+    display: none; }
+  .page-template-page-gravityform .main-navigation ul li {
+    color: #676767; }
+    .page-template-page-gravityform .main-navigation ul li:hover {
+      color: #AAA; }
+    .page-template-page-gravityform .main-navigation ul li a {
+      color: #676767; }
+      .page-template-page-gravityform .main-navigation ul li a:hover {
+        color: #AAA; }
+.page-template-page-gravityform .entry-header {
+  display: none; }
+.page-template-page-gravityform .entry-content {
+  margin: 1.5em auto;
+  max-width: 1200px; }
+.page-template-page-gravityform #map_canvas .gm-style img {
+  max-width: none !important; }
+
+.mve-gravity_wrapper.gform_wrapper {
+  max-width: 1200px;
+  margin: auto; }
+.mve-gravity_wrapper .gform_heading {
+  display: none; }
+.mve-gravity_wrapper .page-top-text {
+  text-align: center; }
+  .mve-gravity_wrapper .page-top-text h2 {
+    font-size: 35px; }
+  .mve-gravity_wrapper .page-top-text h3 {
+    margin-top: 0;
+    margin-bottom: 25px;
+    color: #FBBA30; }
+
+.mve-gravity .gform_confirmation_wrapper {
+  max-width: 800px;
+  margin: 30px auto;
+  background: #B7D9AF; }
+  .mve-gravity .gform_confirmation_wrapper div {
+    color: #5b837b; }
+
+.gravity-breadcrumb-container {
+  clear: both;
+  width: 100%;
+  min-height: 70px;
+  overflow: hidden;
+  visibility: hidden; }
+  .gravity-breadcrumb-container.active {
+    visibility: visible; }
+
+.mve-gravity_wrapper.gform_wrapper .gravity-breadcrumb, .mve-gravity_wrapper.gform_wrapper .gf_step {
+  display: inline-block !important;
+  position: relative;
+  margin: 10px 13px !important;
+  padding: 0 5px !important;
+  height: 50px;
+  vertical-align: middle;
+  filter: alpha(opacity=80);
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+  -webkit-opacity: 0.8;
+  -khtml-opacity: 0.8;
+  -moz-opacity: 0.8;
+  -ms-opacity: 0.8;
+  -o-opacity: 0.8;
+  opacity: 0.8;
+  background-image: url("/wp-content/themes/mooveat/images/design//gravity-tails-sprites.png");
+  background-repeat: repeat-x;
+  background-position: 0 -50px;
+  -webkit-background-size: 13px;
+  -khtml-background-size: 13px;
+  -moz-background-size: 13px;
+  -ms-background-size: 13px;
+  -o-background-size: 13px;
+  background-size: 13px;
+  text-align: center;
+  color: #676767;
+  line-height: 50px !important; }
+  .mve-gravity_wrapper.gform_wrapper .gravity-breadcrumb .gf_step_label, .mve-gravity_wrapper.gform_wrapper .gf_step .gf_step_label {
+    color: #676767;
+    font-size: 0.9em; }
+  .mve-gravity_wrapper.gform_wrapper .gravity-breadcrumb .gf_step_number, .mve-gravity_wrapper.gform_wrapper .gf_step .gf_step_number {
+    display: none; }
+  .mve-gravity_wrapper.gform_wrapper .gravity-breadcrumb:before, .mve-gravity_wrapper.gform_wrapper .gravity-breadcrumb:after, .mve-gravity_wrapper.gform_wrapper .gf_step:before, .mve-gravity_wrapper.gform_wrapper .gf_step:after {
+    content: '';
+    position: absolute;
+    width: 13px;
+    height: 50px;
+    top: 0;
+    left: -13px;
+    background-image: url("/wp-content/themes/mooveat/images/design//gravity-tails-sprites.png");
+    -webkit-background-size: 13px;
+    -khtml-background-size: 13px;
+    -moz-background-size: 13px;
+    -ms-background-size: 13px;
+    -o-background-size: 13px;
+    background-size: 13px;
+    background-repeat: no-repeat;
+    background-position: 0 0; }
+  .mve-gravity_wrapper.gform_wrapper .gravity-breadcrumb:after, .mve-gravity_wrapper.gform_wrapper .gf_step:after {
+    left: auto;
+    right: -13px;
+    background-position: 0 -100px; }
+  .mve-gravity_wrapper.gform_wrapper .gravity-breadcrumb.active, .mve-gravity_wrapper.gform_wrapper .gravity-breadcrumb.gf_step_active, .mve-gravity_wrapper.gform_wrapper .gf_step.active, .mve-gravity_wrapper.gform_wrapper .gf_step.gf_step_active {
+    color: #fff;
+    background-position: 0 -200px; }
+    .mve-gravity_wrapper.gform_wrapper .gravity-breadcrumb.active .gf_step_label, .mve-gravity_wrapper.gform_wrapper .gravity-breadcrumb.gf_step_active .gf_step_label, .mve-gravity_wrapper.gform_wrapper .gf_step.active .gf_step_label, .mve-gravity_wrapper.gform_wrapper .gf_step.gf_step_active .gf_step_label {
+      color: #fff; }
+    .mve-gravity_wrapper.gform_wrapper .gravity-breadcrumb.active:before, .mve-gravity_wrapper.gform_wrapper .gravity-breadcrumb.active:after, .mve-gravity_wrapper.gform_wrapper .gravity-breadcrumb.gf_step_active:before, .mve-gravity_wrapper.gform_wrapper .gravity-breadcrumb.gf_step_active:after, .mve-gravity_wrapper.gform_wrapper .gf_step.active:before, .mve-gravity_wrapper.gform_wrapper .gf_step.active:after, .mve-gravity_wrapper.gform_wrapper .gf_step.gf_step_active:before, .mve-gravity_wrapper.gform_wrapper .gf_step.gf_step_active:after {
+      background-position: 0 -150px; }
+    .mve-gravity_wrapper.gform_wrapper .gravity-breadcrumb.active:after, .mve-gravity_wrapper.gform_wrapper .gravity-breadcrumb.gf_step_active:after, .mve-gravity_wrapper.gform_wrapper .gf_step.active:after, .mve-gravity_wrapper.gform_wrapper .gf_step.gf_step_active:after {
+      background-position: 0 -250px; }
+.mve-gravity_wrapper.gform_wrapper .gfield_required {
+  color: #FBBA30; }
+.mve-gravity_wrapper.gform_wrapper .top_label .ginput_container {
+  margin-top: 1px; }
+.mve-gravity_wrapper.gform_wrapper input[type="text"], .mve-gravity_wrapper.gform_wrapper input[type="email"], .mve-gravity_wrapper.gform_wrapper input[type="url"], .mve-gravity_wrapper.gform_wrapper input[type="password"], .mve-gravity_wrapper.gform_wrapper input[type="search"], .mve-gravity_wrapper.gform_wrapper input[type="number"], .mve-gravity_wrapper.gform_wrapper input[type="tel"], .mve-gravity_wrapper.gform_wrapper input[type="range"], .mve-gravity_wrapper.gform_wrapper input[type="date"], .mve-gravity_wrapper.gform_wrapper input[type="month"], .mve-gravity_wrapper.gform_wrapper input[type="week"], .mve-gravity_wrapper.gform_wrapper input[type="time"], .mve-gravity_wrapper.gform_wrapper input[type="datetime"], .mve-gravity_wrapper.gform_wrapper input[type="datetime-local"], .mve-gravity_wrapper.gform_wrapper input[type="color"], .mve-gravity_wrapper.gform_wrapper textarea {
+  background-color: #f9f9f9; }
+.mve-gravity_wrapper.gform_wrapper select {
+  height: 36px; }
+.mve-gravity_wrapper.gform_wrapper .chosen-container-multi .chosen-results li {
+  color: #676767; }
+.mve-gravity_wrapper.gform_wrapper .chosen-container-multi .chosen-choices {
+  background-image: none;
+  -webkit-border-radius: 3px;
+  -khtml-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #fafafa;
+  border: 1px solid #ccc; }
+  .mve-gravity_wrapper.gform_wrapper .chosen-container-multi .chosen-choices li.search-field input[type="text"] {
+    margin: 5px 0; }
+  .mve-gravity_wrapper.gform_wrapper .chosen-container-multi .chosen-choices li.search-choice {
+    margin: 6px 0 6px 5px !important; }
+    .mve-gravity_wrapper.gform_wrapper .chosen-container-multi .chosen-choices li.search-choice span {
+      color: #676767; }
+.mve-gravity_wrapper.gform_wrapper button, .mve-gravity_wrapper.gform_wrapper input[type="button"], .mve-gravity_wrapper.gform_wrapper input[type="reset"], .mve-gravity_wrapper.gform_wrapper input[type="submit"] {
+  color: #fff;
+  background: #8ECCC0;
+  border: solid 1px transparent; }
+  .mve-gravity_wrapper.gform_wrapper button:hover, .mve-gravity_wrapper.gform_wrapper input[type="button"]:hover, .mve-gravity_wrapper.gform_wrapper input[type="reset"]:hover, .mve-gravity_wrapper.gform_wrapper input[type="submit"]:hover {
+    background: #FBBA30; }
+
+.site-footer {
+  font-size: 0.8em; }
+  .site-footer .site-info {
+    display: inline-block; }
+  .site-footer .mve-footer-links {
+    display: inline-block;
+    margin-left: 3px; }
+
+/*# sourceMappingURL=mve-gravity-styles.css.map */
