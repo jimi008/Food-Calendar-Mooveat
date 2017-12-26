@@ -210,7 +210,7 @@
                                             $color_class = get_field('color_class', 'term_' . $f_term->term_id);
                                         }
 
-                                        if ($output == 'slug'){
+                                        if ($output == 'slug') {
                                             return $food_family_slug;
                                         }
                                         return $color_class;
@@ -239,7 +239,6 @@
                                             <?php
 
 
-
                                             $label_color = (color_class() == 'peach') ? 'orange' : 'green';
 
 
@@ -248,7 +247,9 @@
 
                                             ?>
                                             <!--product-->
-                                            <a class="p-label <?php echo $label_color; ?>" data-id="<?php echo get_the_ID(); ?>" data-family="<?php echo color_class('slug')?>">
+                                            <a class="p-label <?php echo $label_color; ?>"
+                                               data-id="<?php echo get_the_ID(); ?>"
+                                               data-family="<?php echo color_class('slug') ?>">
                                                 <div class="image-holder">
                                                     <?php if (!empty($image)): ?>
                                                         <img src="<?php echo $image['url']; ?>"
@@ -269,12 +270,6 @@
 
                                     <?php
 
-                                    function f_get_months($f_month){
-                                        return get_sub_field($f_month);
-                                    }
-
-//                                    for ($i = 1; $i <= 12; $i++) {
-
                                     $months = array(
                                         'janvier',
                                         'fevrier',
@@ -289,7 +284,7 @@
                                         'novembre',
                                         'decembre',
                                     );
-                                    foreach ($months as $month){
+                                    foreach ($months as $month) {
 
                                         ?>
 
@@ -313,45 +308,6 @@
                                                         // loop through the rows of data
                                                         while (have_rows('calendrier_zone_geo')) : the_row();
 
-//                                                            switch ($i) {
-//                                                                case 1:
-//                                                                    $season = f_get_months(janvier);
-//                                                                    break;
-//                                                                case 2:
-//                                                                    $season = f_get_months(fevrier);
-//                                                                    break;
-//                                                                case 3:
-//                                                                    $season = f_get_months(mars);
-//                                                                    break;
-//                                                                case 4:
-//                                                                    $season = f_get_months(avril);
-//                                                                    break;
-//                                                                case 5:
-//                                                                    $season = f_get_months(mai);
-//                                                                    break;
-//                                                                case 6:
-//                                                                    $season = f_get_months(juin);
-//                                                                    break;
-//                                                                case 7:
-//                                                                    $season = f_get_months(juillet);
-//                                                                    break;
-//                                                                case 8:
-//                                                                    $season = f_get_months(aout);
-//                                                                    break;
-//                                                                case 9:
-//                                                                    $season = f_get_months(septembre);
-//                                                                    break;
-//                                                                case 10:
-//                                                                    $season = f_get_months(octobre);
-//                                                                    break;
-//                                                                case 11:
-//                                                                    $season = f_get_months(novembre);
-//                                                                    break;
-//                                                                case 12:
-//                                                                    $season = f_get_months(decembre);
-//                                                                    break;
-//
-//                                                            }
                                                             $season = get_sub_field($month);
                                                         endwhile;
 
@@ -360,11 +316,10 @@
                                                     $season_check = $season != 0 ? true : false;
 
                                                     if ($season_check == true) {
-                                                        echo '<div class="cell ' . color_class() . '" data-season="' . $season . '" data-id="'.get_the_ID().'" data-family="'.color_class('slug').'"></div>';
+                                                        echo '<div class="cell ' . color_class() . '" data-season="' . $season . '" data-id="' . get_the_ID() . '" data-family="' . color_class('slug') . '"></div>';
                                                     } else {
                                                         echo '<div class="cell" data-season="' . $season . '"></div>';
                                                     }
-
 
                                                     ?>
 
@@ -374,9 +329,8 @@
                                             <?php endif; ?>
 
                                         </div>
-                                    <?php
-}
-
+                                        <?php
+                                    }
                                     ?>
 
                                 </section>
@@ -401,36 +355,35 @@
 
                     <div id="detail" class="">
 
-<?php
+                        <?php
 
-$args = array(
-    'post_type' => 'mve_produit_alim',
-    'tax_query' => array(
-        array(
-            'taxonomy' => 'categorie_produit_alimentaire',
-            'field' => 'slug',
-            'terms' => 'viandes-volailles-gibiers',
-        ),
-    ),
-);
+                        $args = array(
+                            'post_type' => 'mve_produit_alim',
+                            'tax_query' => array(
+                                array(
+                                    'taxonomy' => 'categorie_produit_alimentaire',
+                                    'field' => 'slug',
+                                    'terms' => 'fruits',
+                                ),
+                            ),
+                        );
 
-// the query
-$foods_query = new WP_Query($args); ?>
+                        // the query
+                        $foods_query = new WP_Query($args); ?>
 
-<?php if ($foods_query->have_posts()) : ?>
+                        <?php if ($foods_query->have_posts()) : ?>
 
-    <!-- the loop -->
-    <?php while ($foods_query->have_posts()) : $foods_query->the_post(); ?>
+                            <!-- the loop -->
+                            <?php while ($foods_query->have_posts()) : $foods_query->the_post(); ?>
 
-        <?php get_template_part( 'template-parts/content', 'calendar' ); ?>
+                                <?php get_template_part('template-parts/content', 'calendar'); ?>
 
-    <?php endwhile; ?>
-    <!-- end of the loop -->
-    <?php wp_reset_postdata(); ?>
-<?php endif; ?>
+                            <?php endwhile; ?>
+                            <!-- end of the loop -->
+                            <?php wp_reset_postdata(); ?>
+                        <?php endif; ?>
 
                     </div>
-
 
 
                 </div>

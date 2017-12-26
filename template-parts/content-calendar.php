@@ -116,25 +116,22 @@
         )
     );
 
-function fp_get_fields($f_fields_array){
+    function fc_check_fields($fc_fields_array)
+    {
 
-    $output = array();
-    foreach($f_fields_array as $f_field){
-        $output[] = get_field($f_field);
+        $output = array();
+        foreach ($fc_fields_array as $f_field) {
+            $output[] = get_field($f_field);
+        }
+
+        $output = array_filter($output);
+
+        if (empty($output)) {
+            return false;
+        }
+
+        return true;
     }
-
-    $output = array_filter($output);
-
-   if (empty($output)) {
-        return false;
-   }
-
-   return true;
-}
-
-
-    //fp_get_fields($fields_tabs);
-
 
     ?>
     <form action="#">
@@ -142,14 +139,10 @@ function fp_get_fields($f_fields_array){
                 onchange="location = this.options[this.selectedIndex].value;">
             <option value="1">Select</option>
             <?php
-            foreach($fields_tabs as $tab => $f_array)
-            {
-                if ( fp_get_fields($f_array) ){
-                    echo '<option value="#'.$f_array[0].'">'.$tab.'</option>';
-                }
+            foreach ($fields_tabs as $tab => $fields) {
 
-                foreach( $f_array as $field ){
-
+                if ( fc_check_fields($fields) ) {
+                    echo '<option value="#' . $fields[0] . '">' . $tab . '</option>';
                 }
 
             }
@@ -163,13 +156,12 @@ function fp_get_fields($f_fields_array){
         <ul>
 
             <?php
-            //for ($i = 1; $i <= 12; $i++) {
-                // check if the repeater field has rows of data
-                if (have_rows('calendrier_zone_geo')):
 
-                    // loop through the rows of data
-                    while (have_rows('calendrier_zone_geo')) : the_row();
+            // check if the repeater field has rows of data
+            if (have_rows('calendrier_zone_geo')):
 
+                // loop through the rows of data
+                while (have_rows('calendrier_zone_geo')) : the_row();
 
                     $months = array(
                         'janvier',
@@ -185,11 +177,11 @@ function fp_get_fields($f_fields_array){
                         'novembre',
                         'decembre',
                     );
-                    foreach ($months as $month){
+                    foreach ($months as $month) {
                         $season = get_sub_field($month);
                         $abvr = $month[0];
 
-                        switch($season){
+                        switch ($season) {
                             case 2:
                                 $b_class = 'bar green triple-height';
                                 break;
@@ -200,117 +192,19 @@ function fp_get_fields($f_fields_array){
                                 $b_class = 'bar';
                         }
                         echo '<li>';
-                            echo '<div class="'.$b_class.'"></div>';
-                            echo '<div class="bar-label">'.$abvr.'</div>';
+                        echo '<div class="' . $b_class . '"></div>';
+                        echo '<div class="bar-label">' . $abvr . '</div>';
 
                         echo '</li>';
                     }
 
+                endwhile;
+
+            endif;
 
 
-
-
-
-
-//                        switch ($i) {
-//                            case 1:
-//                                $season = f_get_months(janvier);
-//                                break;
-//                            case 2:
-//                                $season = f_get_months(fevrier);
-//                                break;
-//                            case 3:
-//                                $season = f_get_months(mars);
-//                                break;
-//                            case 4:
-//                                $season = f_get_months(avril);
-//                                break;
-//                            case 5:
-//                                $season = f_get_months(mai);
-//                                break;
-//                            case 6:
-//                                $season = f_get_months(juin);
-//                                break;
-//                            case 7:
-//                                $season = f_get_months(juillet);
-//                                break;
-//                            case 8:
-//                                $season = f_get_months(aout);
-//                                break;
-//                            case 9:
-//                                $season = f_get_months(septembre);
-//                                break;
-//                            case 10:
-//                                $season = f_get_months(octobre);
-//                                break;
-//                            case 11:
-//                                $season = f_get_months(novembre);
-//                                break;
-//                            case 12:
-//                                $season = f_get_months(decembre);
-//                                break;
-
-//                        }
-
-                    endwhile;
-
-                endif;
-
-//            }
 
             ?>
-
-
-
-
-<!--            <li>-->
-<!--                <div class="bar"></div>-->
-<!--                <div class="bar-label">J</div>-->
-<!--            </li>-->
-<!--            <li>-->
-<!--                <div class="bar"></div>-->
-<!--                <div class="bar-label">F</div>-->
-<!--            </li>-->
-<!--            <li>-->
-<!--                <div class="bar"></div>-->
-<!--                <div class="bar-label">M</div>-->
-<!--            </li>-->
-<!--            <li>-->
-<!--                <div class="bar blue-green double-height"></div>-->
-<!--                <div class="bar-label">A</div>-->
-<!--            </li>-->
-<!--            <li>-->
-<!--                <div class="bar green triple-height"></div>-->
-<!--                <div class="bar-label">M</div>-->
-<!--            </li>-->
-<!--            <li>-->
-<!--                <div class="bar green triple-height"></div>-->
-<!--                <div class="bar-label">J</div>-->
-<!--            </li>-->
-<!--            <li>-->
-<!--                <div class="bar"></div>-->
-<!--                <div class="bar-label">J</div>-->
-<!--            </li>-->
-<!--            <li>-->
-<!--                <div class="bar"></div>-->
-<!--                <div class="bar-label">A</div>-->
-<!--            </li>-->
-<!--            <li>-->
-<!--                <div class="bar"></div>-->
-<!--                <div class="bar-label">S</div>-->
-<!--            </li>-->
-<!--            <li>-->
-<!--                <div class="bar"></div>-->
-<!--                <div class="bar-label">O</div>-->
-<!--            </li>-->
-<!--            <li>-->
-<!--                <div class="bar"></div>-->
-<!--                <div class="bar-label">N</div>-->
-<!--            </li>-->
-<!--            <li>-->
-<!--                <div class="bar"></div>-->
-<!--                <div class="bar-label">D</div>-->
-<!--            </li>-->
 
         </ul>
 
@@ -335,28 +229,46 @@ function fp_get_fields($f_fields_array){
 
 <!--Description-->
 <div class="description">
-    <h2 id="carte">Carte d’identité :</h2>
-    <p>
-        Originaire d’Asie centrale, la fève est aujourd’hui cultivée dans le monde entier.
-        Généreuse, c’est un régal pour le palais. Elle se croque crue ou bien cuite. Grâce à sa
-        facilité de conservation sèche, elle fut pendant longtemps un aliment de réserve
-        essentiel
-        face aux pénuries alimentaires.
-    </p>
-    <h2 id="bref">En bref : </h2>
-    <p>
-        Plus grosse graine de la grande famille des légumineuses, elle se cache dans une longue
-        cosse aplatie.
-        À la différence du haricot, elle possède une fine peau qu’il faut retirer avant de la
-        croquer.
-        À l’Épiphanie, elle se cache dans la galette des rois et symbolise une pièce de monnaie.
-        La fève présente un éventail de qualités nutritionnelles et un fort pouvoir de satiété :
-        croquez-en si vous avez un petit creux et vous tiendrez facilement jusqu’au prochain
-        repas.
-        Ne laissez pas passer la saison ! La fève est une plante annuelle qui n’est disponible
-        que
-        quelques semaines, d’avril à juillet.
-    </p>
+
+
+<?php
+
+foreach ($fields_tabs as $tab => $fields) {
+    if (fc_check_fields($fields)) {
+        echo '<h2>'.$tab.'</h2>';
+
+    foreach ($fields as $field) {
+
+        $field_obj = get_field_object($field);
+
+        $field_types = array(
+            'text',
+            'wysiwyg',
+            'number',
+            'select',
+        );
+
+        if( in_array($field_obj['type'], $field_types) ) {
+
+            if(get_field($field)){
+                echo '<h3 id="carte">'.$field_obj['label'].'</h3>';
+                the_field($field);
+            }
+
+
+
+        }
+
+    }
+    }
+
+}
+
+
+
+
+?>
+
     <a href="#" class="more">variétés ></a>
 </div>
 
