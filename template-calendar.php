@@ -201,6 +201,22 @@
 
                                     <?php
 
+                                    function color_class($output)
+                                    {
+                                        $family_terms = get_the_terms(get_the_ID(), 'categorie_produit_alimentaire');
+                                        $color_class = '';
+                                        foreach ($family_terms as $f_term) {
+                                            $food_family_slug = $f_term->slug . $f_term->term_id;
+                                            $color_class = get_field('color_class', 'term_' . $f_term->term_id);
+                                        }
+
+                                        if ($output == 'slug'){
+                                            return $food_family_slug;
+                                        }
+                                        return $color_class;
+                                    }
+
+
                                     $args = array(
                                         'post_type' => 'mve_produit_alim',
                                         'tax_query' => array(
@@ -221,12 +237,18 @@
                                         <?php while ($foods_query->have_posts()) : $foods_query->the_post(); ?>
 
                                             <?php
+
+
+
+                                            $label_color = (color_class() == 'peach') ? 'orange' : 'green';
+
+
                                             $image = get_field('image_produit_alimentaire');
                                             $size = 'thumbnail'; // (thumbnail, medium, large, full or custom size)
 
                                             ?>
                                             <!--product-->
-                                            <a class="p-label orange">
+                                            <a class="p-label <?php echo $label_color; ?>" data-id="<?php echo get_the_ID(); ?>" data-family="<?php echo color_class('slug')?>">
                                                 <div class="image-holder">
                                                     <?php if (!empty($image)): ?>
                                                         <img src="<?php echo $image['url']; ?>"
@@ -246,7 +268,30 @@
                                 <section class="regular slider slider-product" id="slider-product">
 
                                     <?php
-                                    for ($i = 1; $i <= 12; $i++) { ?>
+
+                                    function f_get_months($f_month){
+                                        return get_sub_field($f_month);
+                                    }
+
+//                                    for ($i = 1; $i <= 12; $i++) {
+
+                                    $months = array(
+                                        'janvier',
+                                        'fevrier',
+                                        'mars',
+                                        'avril',
+                                        'mai',
+                                        'juin',
+                                        'juillet',
+                                        'aout',
+                                        'septembre',
+                                        'octobre',
+                                        'novembre',
+                                        'decembre',
+                                    );
+                                    foreach ($months as $month){
+
+                                        ?>
 
                                         <!--col <?php echo $i; ?> -->
                                         <div class="col">
@@ -262,89 +307,64 @@
 
                                                     <?php
 
-// check if the repeater field has rows of data
+                                                    // check if the repeater field has rows of data
                                                     if (have_rows('calendrier_zone_geo')):
 
                                                         // loop through the rows of data
                                                         while (have_rows('calendrier_zone_geo')) : the_row();
 
-                                                            // display a sub field value
-                                                            $janvier = get_sub_field('janvier');
-                                                            $fevrier = get_sub_field('fevrier');
-                                                            $mars = get_sub_field('mars');
-                                                            $avril = get_sub_field('avril');
-                                                            $mai = get_sub_field('mai');
-                                                            $juin = get_sub_field('juin');
-                                                            $juillet = get_sub_field('juillet');
-                                                            $aout = get_sub_field('aout');
-                                                            $septembre = get_sub_field('septembre');
-                                                            $octobre = get_sub_field('octobre');
-                                                            $novembre = get_sub_field('novembre');
-                                                            $decembre = get_sub_field('decembre');
-
-                                                            switch ($i) {
-                                                                case 1:
-                                                                    $season = $janvier;
-                                                                    break;
-                                                                case 2:
-                                                                    $season = $fevrier;
-                                                                    break;
-                                                                case 3:
-                                                                    $season = $mars;
-                                                                    break;
-                                                                case 4:
-                                                                    $season = $avril;
-                                                                    break;
-                                                                case 5:
-                                                                    $season = $mai;
-                                                                    break;
-                                                                case 6:
-                                                                    $season = $juin;
-                                                                    break;
-                                                                case 7:
-                                                                    $season = $juillet;
-                                                                    break;
-                                                                case 8:
-                                                                    $season = $aout;
-                                                                    break;
-                                                                case 9:
-                                                                    $season = $septembre;
-                                                                    break;
-                                                                case 10:
-                                                                    $season = $octobre;
-                                                                    break;
-                                                                case 11:
-                                                                    $season = $novembre;
-                                                                    break;
-                                                                case 12:
-                                                                    $season = $decembre;
-                                                                    break;
-
-                                                            }
-
+//                                                            switch ($i) {
+//                                                                case 1:
+//                                                                    $season = f_get_months(janvier);
+//                                                                    break;
+//                                                                case 2:
+//                                                                    $season = f_get_months(fevrier);
+//                                                                    break;
+//                                                                case 3:
+//                                                                    $season = f_get_months(mars);
+//                                                                    break;
+//                                                                case 4:
+//                                                                    $season = f_get_months(avril);
+//                                                                    break;
+//                                                                case 5:
+//                                                                    $season = f_get_months(mai);
+//                                                                    break;
+//                                                                case 6:
+//                                                                    $season = f_get_months(juin);
+//                                                                    break;
+//                                                                case 7:
+//                                                                    $season = f_get_months(juillet);
+//                                                                    break;
+//                                                                case 8:
+//                                                                    $season = f_get_months(aout);
+//                                                                    break;
+//                                                                case 9:
+//                                                                    $season = f_get_months(septembre);
+//                                                                    break;
+//                                                                case 10:
+//                                                                    $season = f_get_months(octobre);
+//                                                                    break;
+//                                                                case 11:
+//                                                                    $season = f_get_months(novembre);
+//                                                                    break;
+//                                                                case 12:
+//                                                                    $season = f_get_months(decembre);
+//                                                                    break;
+//
+//                                                            }
+                                                            $season = get_sub_field($month);
                                                         endwhile;
 
                                                     endif;
 
                                                     $season_check = $season != 0 ? true : false;
 
-
-                                                    $colors = array(
-                                                        'legumes' => 'peach',
-
-                                                    );
-
-                                                    $terms = get_the_terms(get_the_ID(), 'categorie_produit_alimentaire');
-                                                    foreach ($terms as $term) {
-                                                        $color_class = get_field('color_class', 'term_' . $term->term_id);
-                                                    }
-
-
                                                     if ($season_check == true) {
-                                                        echo '<div class="cell ' . $color_class . '" data-season="' . $season . '"></div>';
+                                                        echo '<div class="cell ' . color_class() . '" data-season="' . $season . '" data-id="'.get_the_ID().'" data-family="'.color_class('slug').'"></div>';
                                                     } else {
                                                         echo '<div class="cell" data-season="' . $season . '"></div>';
                                                     }
+
 
                                                     ?>
 
@@ -354,7 +374,8 @@
                                             <?php endif; ?>
 
                                         </div>
-                                    <?php }
+                                    <?php
+}
 
                                     ?>
 
@@ -380,135 +401,38 @@
 
                     <div id="detail" class="">
 
+<?php
 
-                        <!--close button-->
+$args = array(
+    'post_type' => 'mve_produit_alim',
+    'tax_query' => array(
+        array(
+            'taxonomy' => 'categorie_produit_alimentaire',
+            'field' => 'slug',
+            'terms' => 'viandes-volailles-gibiers',
+        ),
+    ),
+);
 
-                        <div id="detail-header">
+// the query
+$foods_query = new WP_Query($args); ?>
 
-                            <!--Head-->
+<?php if ($foods_query->have_posts()) : ?>
 
-                            <div class="head">
-                                <div class="image-holder">
-                                    <img src="images/strawberry.png" alt="">
-                                </div>
-                                <div class="product-title">
-                                    Fraise
-                                </div>
-                            </div>
+    <!-- the loop -->
+    <?php while ($foods_query->have_posts()) : $foods_query->the_post(); ?>
 
-                            <!--Select-->
+        <?php get_template_part( 'template-parts/content', 'calendar' ); ?>
 
-                            <form action="#">
-                                <select name="#" id="category-selector" class="select-dropdown custom-select"
-                                        onchange="location = this.options[this.selectedIndex].value;">
-                                    <option value="1">Select</option>
-                                    <option value="#carte">Carte d'identité</option>
-                                    <option value="#bref">Bref</option>
-                                </select>
-                            </form>
-
-                            <!--Chart-->
-
-                            <div class="bar-chart">
-                                <ul>
-                                    <li>
-                                        <div class="bar"></div>
-                                        <div class="bar-label">J</div>
-                                    </li>
-                                    <li>
-                                        <div class="bar"></div>
-                                        <div class="bar-label">F</div>
-                                    </li>
-                                    <li>
-                                        <div class="bar"></div>
-                                        <div class="bar-label">M</div>
-                                    </li>
-                                    <li>
-                                        <div class="bar blue-green double-height"></div>
-                                        <div class="bar-label">A</div>
-                                    </li>
-                                    <li>
-                                        <div class="bar green triple-height"></div>
-                                        <div class="bar-label">M</div>
-                                    </li>
-                                    <li>
-                                        <div class="bar green triple-height"></div>
-                                        <div class="bar-label">J</div>
-                                    </li>
-                                    <li>
-                                        <div class="bar"></div>
-                                        <div class="bar-label">J</div>
-                                    </li>
-                                    <li>
-                                        <div class="bar"></div>
-                                        <div class="bar-label">A</div>
-                                    </li>
-                                    <li>
-                                        <div class="bar"></div>
-                                        <div class="bar-label">S</div>
-                                    </li>
-                                    <li>
-                                        <div class="bar"></div>
-                                        <div class="bar-label">O</div>
-                                    </li>
-                                    <li>
-                                        <div class="bar"></div>
-                                        <div class="bar-label">N</div>
-                                    </li>
-                                    <li>
-                                        <div class="bar"></div>
-                                        <div class="bar-label">D</div>
-                                    </li>
-
-                                </ul>
-
-                                <div class="legends">
-                                    <div class="legend green">
-                                        <div class="dot"></div>
-                                        <div class="label">Pleine saison</div>
-                                    </div>
-                                    <div class="legend blue-green">
-                                        <div class="dot"></div>
-                                        <div class="label">Disponible</div>
-                                    </div>
-                                    <div class="legend">
-                                        <div class="dot"></div>
-                                        <div class="label">Indisponible</div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-
-                        <!--Description-->
-                        <div class="description">
-                            <h2 id="carte">Carte d’identité :</h2>
-                            <p>
-                                Originaire d’Asie centrale, la fève est aujourd’hui cultivée dans le monde entier.
-                                Généreuse, c’est un régal pour le palais. Elle se croque crue ou bien cuite. Grâce à sa
-                                facilité de conservation sèche, elle fut pendant longtemps un aliment de réserve
-                                essentiel
-                                face aux pénuries alimentaires.
-                            </p>
-                            <h2 id="bref">En bref : </h2>
-                            <p>
-                                Plus grosse graine de la grande famille des légumineuses, elle se cache dans une longue
-                                cosse aplatie.
-                                À la différence du haricot, elle possède une fine peau qu’il faut retirer avant de la
-                                croquer.
-                                À l’Épiphanie, elle se cache dans la galette des rois et symbolise une pièce de monnaie.
-                                La fève présente un éventail de qualités nutritionnelles et un fort pouvoir de satiété :
-                                croquez-en si vous avez un petit creux et vous tiendrez facilement jusqu’au prochain
-                                repas.
-                                Ne laissez pas passer la saison ! La fève est une plante annuelle qui n’est disponible
-                                que
-                                quelques semaines, d’avril à juillet.
-                            </p>
-                            <a href="#" class="more">variétés ></a>
-                        </div>
+    <?php endwhile; ?>
+    <!-- end of the loop -->
+    <?php wp_reset_postdata(); ?>
+<?php endif; ?>
 
                     </div>
+
+
+
                 </div>
 
             </div>
