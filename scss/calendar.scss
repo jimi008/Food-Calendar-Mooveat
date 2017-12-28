@@ -1,7 +1,6 @@
 // Imports
 @import url('https://fonts.googleapis.com/css?family=Nunito:300,400,400i,600,700,900');
 //font-family: 'Nunito', sans-serif;
-@import "bootstrap.min.css";
 @import "slick.css";
 
 // variables
@@ -81,8 +80,7 @@ body {
         .checkbox-holder {
             .checkbox {
                 display: inline-block;
-                margin-left: 10px;
-                margin-right: 10px;
+                margin: 0 10px;
             }
             @include tablet {
                 display: none;
@@ -116,6 +114,7 @@ body {
                     margin-bottom: 7px;
                     display: block;
                     text-decoration: none;
+                    cursor: pointer;
 
                     .image-holder {
                         width: 40px;
@@ -404,6 +403,7 @@ body {
                     }
                     .label {
                         display: inline-block;
+                        color: #333;
 
                     }
                     &.green {
@@ -551,6 +551,7 @@ body {
 // Select
 .select {
     position: relative;
+    display: block;
 
     ul {
         padding: 0;
@@ -636,6 +637,9 @@ body {
     position: relative;
     padding-left: 1.95em;
     cursor: pointer;
+    font-size: 14px;
+    color: #333;
+    display: inline;
 
 }
 

@@ -116,12 +116,14 @@
         )
     );
 
-    function fc_check_fields($fc_fields_array)
-    {
+    function fc_check_fields($fc_fields_array) {
 
         $output = array();
-        foreach ($fc_fields_array as $f_field) {
-            $output[] = get_field($f_field);
+        foreach ($fc_fields_array as $field) {
+
+            $field_obj = get_field_object($field);
+            $output[] = $field_obj['value'];
+
         }
 
         $output = array_filter($output);
@@ -136,12 +138,12 @@
     ?>
     <form action="#">
         <select name="#" id="category-selector" class="select-dropdown custom-select"
-                onchange="location = this.options[this.selectedIndex].value;">
+                onchange="location = this.options[this.selectedIndex].value; ">
             <option value="1">Select</option>
             <?php
             foreach ($fields_tabs as $tab => $fields) {
 
-                if ( fc_check_fields($fields) ) {
+                if (fc_check_fields($fields)) {
                     echo '<option value="#' . $fields[0] . '">' . $tab . '</option>';
                 }
 
@@ -194,15 +196,12 @@
                         echo '<li>';
                         echo '<div class="' . $b_class . '"></div>';
                         echo '<div class="bar-label">' . $abvr . '</div>';
-
                         echo '</li>';
                     }
 
                 endwhile;
 
             endif;
-
-
 
             ?>
 
@@ -230,44 +229,139 @@
 <!--Description-->
 <div class="description">
 
+    <?php
 
-<?php
+    foreach ($fields_tabs as $tab => $fields) {
 
-foreach ($fields_tabs as $tab => $fields) {
-    if (fc_check_fields($fields)) {
-        echo '<h2>'.$tab.'</h2>';
+        if (fc_check_fields($fields)) {
+            echo '<h2 id="' . $fields[0] . '">' . $tab . '</h2>';
+        }
 
-    foreach ($fields as $field) {
+        foreach ($fields as $field) {
 
-        $field_obj = get_field_object($field);
+            $field_obj = get_field_object($field);
 
-        $field_types = array(
-            'text',
-            'wysiwyg',
-            'number',
-            'select',
-        );
 
-        if( in_array($field_obj['type'], $field_types) ) {
+            $field_types = array(
+                'text',
+                'wysiwyg',
+                'number',
+                'select',
+                'textarea',
+            );
 
-            if(get_field($field)){
-                echo '<h3 id="carte">'.$field_obj['label'].'</h3>';
-                the_field($field);
+            if (in_array($field_obj['type'], $field_types)) {
+
+                if (get_field($field)) {
+                    echo '<h4>' . $field_obj['label'] . '</h4>';
+                    the_field($field);
+                }
+
             }
 
+            if ($field_obj['type'] == 'repeater') {
 
+                if (have_rows($field)): ?>
+
+                    <ul>
+                        <?php
+                        // loop through the rows of data
+                        while (have_rows($field)) : the_row();
+
+                            $args = array(
+                                'nom_variete',
+                                'description_variete',
+
+                            );
+
+                            echo '<li>';
+
+                            foreach ($args as $arg) {
+                                if (get_sub_field($arg)) {
+
+                                    echo '<p>' . get_sub_field($arg) . '</p>';
+
+                                }
+                            }
+
+                            echo '</li>';
+
+                            if (have_rows('sous_variete')): ?>
+
+                                <ul>
+
+                                    <?php while (have_rows('sous_variete')): the_row();
+
+                                        $args = array(
+                                            'nom_sous-variete',
+                                            'description_sous-variete',
+
+                                        );
+
+                                        echo '<li>';
+
+                                        foreach ($args as $arg) {
+                                            if (get_sub_field($arg)) {
+
+                                                echo '<p>' . get_sub_field($arg) . '</p>';
+
+                                            }
+                                        }
+
+                                        echo '</li>';
+
+                                        if (have_rows('sous-sous-variete')): ?>
+
+                                            <ul>
+
+                                                <?php while (have_rows('sous-sous-variete')): the_row();
+
+                                                    $args = array(
+                                                        'nom_sous-sous-variete',
+                                                        'description_sous-sous-variete',
+                                                        'provenance_variete',
+
+                                                    );
+
+                                                    echo '<li>';
+
+                                                    foreach ($args as $arg) {
+                                                        if (get_sub_field($arg)) {
+
+                                                            echo '<p>' . get_sub_field($arg) . '</p>';
+
+                                                        }
+                                                    }
+
+                                                    echo '</li>';
+
+                                                    ?>
+
+                                                <?php endwhile; ?>
+
+                                            </ul>
+
+                                        <?php endif; ?>
+
+                                    <?php endwhile; ?>
+
+                                </ul>
+
+                            <?php endif; ?>
+
+                        <?php endwhile; ?>
+
+                    </ul>
+
+                <?php endif;
+
+            }
 
         }
 
     }
-    }
 
-}
-
-
-
-
-?>
+    ?>
 
     <a href="#" class="more">variétés ></a>
 </div>

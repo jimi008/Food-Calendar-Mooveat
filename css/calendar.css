@@ -1,5 +1,4 @@
 @import url("https://fonts.googleapis.com/css?family=Nunito:300,400,400i,600,700,900");
-@import url(bootstrap.min.css);
 @import url(slick.css);
 body {
   font-family: 'Nunito', sans-serif;
@@ -30,8 +29,7 @@ body {
     z-index: 9999 !important; }
     #calendar .dropdown-holder .checkbox-holder .checkbox {
       display: inline-block;
-      margin-left: 10px;
-      margin-right: 10px; }
+      margin: 0 10px; }
     @media (max-width: 991px) {
       #calendar .dropdown-holder .checkbox-holder {
         display: none; } }
@@ -50,7 +48,8 @@ body {
         height: 50px;
         margin-bottom: 7px;
         display: block;
-        text-decoration: none; }
+        text-decoration: none;
+        cursor: pointer; }
         #calendar #products .row .product-labels .p-label .image-holder {
           width: 40px;
           height: 40px;
@@ -257,7 +256,8 @@ body {
           margin-left: 10px;
           margin-right: 6px; }
         #detail #detail-header .bar-chart .legends .legend .label {
-          display: inline-block; }
+          display: inline-block;
+          color: #333; }
         #detail #detail-header .bar-chart .legends .legend.green .dot {
           background: #a2c845; }
         #detail #detail-header .bar-chart .legends .legend.blue-green .dot {
@@ -354,7 +354,8 @@ body {
         opacity: 1; } }
 
 .select {
-  position: relative; }
+  position: relative;
+  display: block; }
   .select ul {
     padding: 0;
     margin: 2px 0 0;
@@ -422,7 +423,10 @@ body {
 [type="checkbox"]:checked + label {
   position: relative;
   padding-left: 1.95em;
-  cursor: pointer; }
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+  display: inline; }
 
 /* checkbox aspect */
 [type="checkbox"]:not(:checked) + label:before,

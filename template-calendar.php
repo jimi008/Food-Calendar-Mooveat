@@ -1,73 +1,20 @@
 <?php
 /**
- *  Template Name: Food Calendar
+ * Template Name: Food Calendar
+ *
+ * The sitemap page template displays a user-friendly overview
+ * of the content of your website.
+ *
+ * @package mooveat
+ * @subpackage Food Calendar
  */
 
+get_header();
+
 ?>
-
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <!-- start: Mobile Specific -->
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-        <!-- end: Mobile Specific -->
-        <title>Mooveat</title>
-        <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/css/calendar.css">
-    </head>
-    <body>
-
-    <div id="header">
-
-        <div class="top-bar">
-            <ul class="top-nav">
-                <li>
-                    <a href="#">signaler un producteur</a>
-                </li>
-                <li>
-                    <a href="#">déconnexion</a>
-                </li>
-                <li>
-                    <a href="#">inscription</a>
-                </li>
-                <li>
-                    <a href="#">fr</a>
-                </li>
-            </ul>
-        </div>
-
-        <div class="search-bar">
-
-            <div class="search-holder">
-
-                <form action="#">
-                    <input type="text" placeholder="Recherche">
-                    <button></button>
-                </form>
-
-            </div>
-
-            <a href="#" class="menu-icon">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-            </a>
-            <div class="logo-holder">
-                <img src="images/logo-signature.png" alt="Mooveat Logo" class="logo-desktop">
-                <img src="images/mobile-logo.png" alt="Mooveat Logo" class="logo-mobile">
-
-
-            </div>
-
-        </div>
-
-    </div>
-
     <!-- Calendar view  Start-->
 
     <div id="calendar">
-
 
         <div class="container">
             <div class="row">
@@ -77,7 +24,20 @@
 
 
                     <!-- Month bar -->
+<?php
 
+$post_type = 'mve_produit_alim';
+
+$terms = get_terms(array(
+    'taxonomy' => 'categorie_produit_alimentaire',
+    'hide_empty' => false,
+));
+
+$food_family = array();
+
+if (!empty($terms) && !is_wp_error($terms)) :
+
+?>
                     <div id="month-bar">
                         <div class="container-fluid">
                             <div class="row">
@@ -122,12 +82,9 @@
                                         </div>
                                         <!-- items mirrored twice, total of 12 -->
 
-
                                     </section>
 
-
                                 </div>
-
 
                             </div>
                         </div>
@@ -145,48 +102,36 @@
 
                                 <?php
 
-                                $post_type = 'mve_produit_alim';
-
-
-                                $terms = get_terms(array(
-                                    'taxonomy' => 'categorie_produit_alimentaire',
-                                    'hide_empty' => false,
-                                ));
-                                $food_family = array();
-
-                                if (!empty($terms) && !is_wp_error($terms)) :
-
                                 foreach ($terms as $term) :
                                     $food_family[] = $term->term_id;
                                     ?>
 
                                     <div class="checkbox">
                                         <input type="checkbox" id="<?php echo $term->slug . $term->term_id; ?>"
-                                               data-foodfamily="<?php echo $term->slug; ?>"
+                                               data-family="<?php echo $term->slug; ?>"
                                                checked/>
                                         <label for="<?php echo $term->slug . $term->term_id; ?>"><?php echo $term->name; ?></label>
                                     </div>
 
                                 <?php endforeach; ?>
 
-
                             </div>
 
-                            <select name="#" id="category-selector1" class="select-dropdown custom-select ">
+                            <select name="#" id="family-selector-m" class="select-dropdown custom-select ">
                                 <option value="1">Select</option>
                                 <?php
                                 foreach ($terms as $term) :
                                     ?>
 
-                                    <option value="<?php echo $term->term_id; ?>"><?php echo $term->name; ?></option>
+                                    <option value="<?php echo $term->slug; ?>"><?php echo $term->name; ?></option>
 
                                 <?php endforeach; ?>
                             </select>
 
-                            <?php endif; ?>
+
                         </form>
                     </div>
-
+<?php endif; ?>
 
                     <!-- Dropdown Area End -->
 
@@ -206,7 +151,7 @@
                                         $family_terms = get_the_terms(get_the_ID(), 'categorie_produit_alimentaire');
                                         $color_class = '';
                                         foreach ($family_terms as $f_term) {
-                                            $food_family_slug = $f_term->slug . $f_term->term_id;
+                                            $food_family_slug = $f_term->slug;
                                             $color_class = get_field('color_class', 'term_' . $f_term->term_id);
                                         }
 
@@ -215,7 +160,6 @@
                                         }
                                         return $color_class;
                                     }
-
 
                                     $args = array(
                                         'post_type' => 'mve_produit_alim',
@@ -238,9 +182,7 @@
 
                                             <?php
 
-
                                             $label_color = (color_class() == 'peach') ? 'orange' : 'green';
-
 
                                             $image = get_field('image_produit_alimentaire');
                                             $size = 'thumbnail'; // (thumbnail, medium, large, full or custom size)
@@ -318,7 +260,7 @@
                                                     if ($season_check == true) {
                                                         echo '<div class="cell ' . color_class() . '" data-season="' . $season . '" data-id="' . get_the_ID() . '" data-family="' . color_class('slug') . '"></div>';
                                                     } else {
-                                                        echo '<div class="cell" data-season="' . $season . '"></div>';
+                                                        echo '<div class="cell" data-season="' . $season . '" data-id="' . get_the_ID() . '" data-family="' . color_class('slug') . '"></div>';
                                                     }
 
                                                     ?>
@@ -341,9 +283,7 @@
 
                     </div>
 
-
                     <!-- Product Holder End -->
-
 
                 </div>
 
@@ -355,33 +295,37 @@
 
                     <div id="detail" class="">
 
-                        <?php
+                        <div class="ajaxed-data">
 
-                        $args = array(
-                            'post_type' => 'mve_produit_alim',
-                            'tax_query' => array(
-                                array(
-                                    'taxonomy' => 'categorie_produit_alimentaire',
-                                    'field' => 'slug',
-                                    'terms' => 'fruits',
+                            <?php
+
+                            $args = array(
+                                'post_type' => 'mve_produit_alim',
+                                'tax_query' => array(
+                                    array(
+                                        'taxonomy' => 'categorie_produit_alimentaire',
+                                        'field' => 'slug',
+                                        'terms' => 'fruits',
+                                    ),
                                 ),
-                            ),
-                        );
+                            );
 
-                        // the query
-                        $foods_query = new WP_Query($args); ?>
+                            // the query
+                            $foods_query = new WP_Query($args); ?>
 
-                        <?php if ($foods_query->have_posts()) : ?>
+                            <?php if ($foods_query->have_posts()) : ?>
 
-                            <!-- the loop -->
-                            <?php while ($foods_query->have_posts()) : $foods_query->the_post(); ?>
+                                <!-- the loop -->
+                                <?php while ($foods_query->have_posts()) : $foods_query->the_post(); ?>
 
-                                <?php get_template_part('template-parts/content', 'calendar'); ?>
+                                    <?php get_template_part('template-parts/content', 'calendar'); ?>
 
-                            <?php endwhile; ?>
-                            <!-- end of the loop -->
-                            <?php wp_reset_postdata(); ?>
-                        <?php endif; ?>
+                                <?php endwhile; ?>
+                                <!-- end of the loop -->
+                                <?php wp_reset_postdata(); ?>
+                            <?php endif; ?>
+
+                        </div>
 
                     </div>
 
@@ -391,57 +335,10 @@
             </div>
         </div>
 
-
     </div>
 
     <!-- Calendar view End -->
 
-    <footer class="footer">
-        <ul class="footer-links">
-            <li>
-                <a href="">
-                    Conditions générales d’utilisation
-                </a>
-            </li>
-
-            <li>
-                <a href="">
-                    Contactez-nous
-                </a>
-            </li>
-
-            <li>
-                <a href="">
-                    Mentions légales
-                </a>
-            </li>
-
-            <li>
-                <a href="">
-                    Crédits
-                </a>
-            </li>
-        </ul>
-
-    </footer>
-
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-2.1.3.min.js" type="text/javascript"></script>
-
-    <!-- Slick Slider -->
-    <script src="<?php echo get_stylesheet_directory_uri(); ?>/js/slick.js" type="text/javascript"
-            charset="utf-8"></script>
-    <script src="<?php echo get_stylesheet_directory_uri(); ?>/js/jquery.sticky.js" type="text/javascript"
-            charset="utf-8"></script>
-
-    <!--Global Script-->
-
-    <script src="<?php echo get_stylesheet_directory_uri(); ?>/js/script.js"></script>
-
-
-    </body>
-    </html>
-
 <?php
-
+get_footer();
 ?>

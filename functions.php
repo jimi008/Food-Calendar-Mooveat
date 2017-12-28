@@ -821,3 +821,62 @@ function add_gravity_styles_scripts($form){
 }
 
 //add_filter( 'gform_pre_render_1', 'add_gravity_styles_scripts' );
+
+function fc_enqueue_asset() {
+
+    global $wp_query;
+
+    if( is_page('calendar') ){
+
+    wp_enqueue_style( 'calendar', get_stylesheet_directory_uri().'/css/calendar.css' );
+
+    wp_enqueue_script( 'slick', get_stylesheet_directory_uri() . '/js/slick.js', array('jquery') );
+    wp_enqueue_script( 'sticky', get_stylesheet_directory_uri() . '/js/jquery.sticky.js', array('jquery') );
+    wp_register_script( 'ajax-food', get_stylesheet_directory_uri() . '/js/script.js', array('jquery') );
+
+    wp_localize_script( 'ajax-food', 'ajax_food_params', array(
+        'ajaxurl' => admin_url( 'admin-ajax.php' ),
+        'posts' => json_encode( $wp_query->query_vars ),
+        'security' => wp_create_nonce("load_more_posts")
+    ) );
+
+    wp_enqueue_script( 'ajax-food' );
+    }
+}
+
+add_action( 'wp_enqueue_scripts', 'fc_enqueue_asset' );
+
+
+function food_products_ajax_handler(){
+
+    check_ajax_referer('load_more_posts', 'security');
+
+    $args = json_decode( stripslashes( $_POST['query'] ), true );
+    $food_post_id = $_POST['id'];
+
+    $args = array(
+        'post_type' => 'mve_produit_alim',
+        'p'=> $food_post_id,
+
+    );
+
+    // the query
+    $foods_query = new WP_Query($args);
+
+    if ($foods_query->have_posts()) :
+
+
+        while ($foods_query->have_posts()) : $foods_query->the_post();
+
+            get_template_part('template-parts/content', 'calendar');
+
+        endwhile;
+
+
+    endif;
+
+    wp_die();
+
+}
+add_action('wp_ajax_loadfood', 'food_products_ajax_handler'); // wp_ajax_{action}
+add_action('wp_ajax_nopriv_loadfood', 'food_products_ajax_handler'); // wp_ajax_nopriv_{action}
