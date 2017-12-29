@@ -16,9 +16,12 @@
     <!--Head-->
 
     <?php
+
     $image = get_field('image_produit_alimentaire');
     $size = 'thumbnail'; // (thumbnail, medium, large, full or custom size)
+
     ?>
+
     <div class="head">
         <div class="image-holder">
             <?php if (!empty($image)): ?>
@@ -58,7 +61,6 @@
         ),
         'Variétés' => array(
             'varietes',
-            'variete',
         ),
         'Caractéristiques' => array(
             'caracteristiques',
@@ -116,7 +118,8 @@
         )
     );
 
-    function fc_check_fields($fc_fields_array) {
+    function fc_check_fields($fc_fields_array)
+    {
 
         $output = array();
         foreach ($fc_fields_array as $field) {
@@ -137,9 +140,10 @@
 
     ?>
     <form action="#">
-        <select name="#" id="category-selector" class="select-dropdown custom-select"
+        <select title="Select heading" name="#" id="category-selector" class="select-dropdown custom-select"
                 onchange="location = this.options[this.selectedIndex].value; ">
             <option value="1">Select</option>
+
             <?php
             foreach ($fields_tabs as $tab => $fields) {
 
@@ -155,6 +159,7 @@
     <!--Chart-->
 
     <div class="bar-chart">
+
         <ul>
 
             <?php
@@ -193,10 +198,12 @@
                             default:
                                 $b_class = 'bar';
                         }
-                        echo '<li>';
-                        echo '<div class="' . $b_class . '"></div>';
-                        echo '<div class="bar-label">' . $abvr . '</div>';
-                        echo '</li>';
+                        ?>
+                        <li>
+                            <div class="<?php echo $b_class; ?>"></div>
+                            <div class="bar-label"><?php echo $abvr; ?></div>
+                        </li>
+                        <?php
                     }
 
                 endwhile;
@@ -240,7 +247,6 @@
         foreach ($fields as $field) {
 
             $field_obj = get_field_object($field);
-
 
             $field_types = array(
                 'text',
@@ -363,10 +369,4 @@
 
     ?>
 
-    <a href="#" class="more">variétés ></a>
 </div>
-
-
-
-
-

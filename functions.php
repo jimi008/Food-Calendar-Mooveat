@@ -880,3 +880,14 @@ function food_products_ajax_handler(){
 }
 add_action('wp_ajax_loadfood', 'food_products_ajax_handler'); // wp_ajax_{action}
 add_action('wp_ajax_nopriv_loadfood', 'food_products_ajax_handler'); // wp_ajax_nopriv_{action}
+
+
+
+function add_allowed_origins($origins) {
+    $origins[] = 'http://a14819f6.ngrok.io';
+    $origins[] = 'http://localhost:7880';
+    $origins[] = 'http://192.168.8.111:7880';
+    $origins[] = 'http://192.168.8.111:5566';
+    return $origins;
+}
+add_filter('allowed_http_origins', 'add_allowed_origins');
