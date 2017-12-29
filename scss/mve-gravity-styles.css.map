@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AAAA;;EAEE;ACFF;;;;;;;;;;;;gEAYgE;ADNhE;;GAEG;AAoBH,IAAI;EACF,KAAK,EAAE,WAAW",
-"sources": ["mve-gravity-styles.scss","css3-mixins.scss"],
-"names": [],
-"file": "mve-gravity-styles.css"
-}
