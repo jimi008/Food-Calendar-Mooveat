@@ -10,7 +10,7 @@
  */
 
 get_header('calendar');
-
+show_admin_bar(false);
 ?>
 
     <div id="primary" class="content-area">

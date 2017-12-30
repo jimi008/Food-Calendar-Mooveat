@@ -57,6 +57,9 @@ if it's not present, don't show loader */
 }
 // Calendar Styles
 
+html {
+    margin: 0 !important;
+}
 body {
     font-family: 'Nunito', sans-serif;
     padding-bottom: 40px;
@@ -1051,7 +1054,7 @@ $top-header-bar-zindex : 1000;
         /*@include full-height-parent;*/
 
         #masthead{
-            //display: none !important;
+            display: none !important;
             //position: fixed;
             z-index: 1000;
             top:0;
@@ -1343,6 +1346,7 @@ $top-header-bar-zindex : 1000;
 
         #content{
             /*@include full-height-parent;*/
+            margin-top: 65px;
             .entry-content{
                 margin-top: 0;
             }

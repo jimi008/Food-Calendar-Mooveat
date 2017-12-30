@@ -129,7 +129,7 @@ function mooveat_scripts() {
     wp_enqueue_script('jquery-ui-autocomplete');
     wp_enqueue_script('jquery-touch-punch');
 
-    wp_enqueue_script( 'custom-mve-script', get_stylesheet_directory_uri() . '/js/mooveat-custom.js', array( 'jquery' ),false, true );
+    wp_enqueue_script( 'custom-mve-script', get_stylesheet_directory_uri() . '/js/mooveat-custom.js', array( 'jquery','wpgmp-google-map-main' ),false, true );
 
 	wp_enqueue_script( 'mooveat-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '20151215', true );
 
@@ -832,9 +832,7 @@ function fc_enqueue_asset() {
 
     wp_enqueue_script( 'slick', get_stylesheet_directory_uri() . '/js/slick.js', array('jquery') );
     wp_enqueue_script( 'sticky', get_stylesheet_directory_uri() . '/js/jquery.sticky.js', array('jquery') );
-        wp_enqueue_script( 'custom-mve-script', get_stylesheet_directory_uri() . '/js/mooveat-custom.js', array( 'jquery','wpgmp-google-map-main' ),false, true );
-
-        wp_register_script( 'ajax-food', get_stylesheet_directory_uri() . '/js/script.js', array('jquery') );
+    wp_register_script( 'ajax-food', get_stylesheet_directory_uri() . '/js/script.js', array('jquery') );
 
     wp_localize_script( 'ajax-food', 'ajax_food_params', array(
         'ajaxurl' => admin_url( 'admin-ajax.php' ),

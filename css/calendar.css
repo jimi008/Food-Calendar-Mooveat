@@ -27,6 +27,9 @@ if it's not present, don't show loader */
   width: 64px;
   height: 64px; }
 
+html {
+  margin: 0 !important; }
+
 body {
   font-family: 'Nunito', sans-serif;
   padding-bottom: 40px; }
@@ -741,6 +744,7 @@ body {
   position: absolute;
   /*@include full-height-parent;*/ }
   #page #masthead {
+    display: none !important;
     z-index: 1000;
     top: 0;
     height: 30px;
@@ -1020,6 +1024,7 @@ body {
       margin: 0 7px; }
   #page #content {
     /*@include full-height-parent;*/
+    margin-top: 65px;
     /*********** Splash screen **************/
     /*********** End Splash screen **************/ }
     #page #content .entry-content {

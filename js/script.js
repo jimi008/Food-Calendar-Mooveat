@@ -114,10 +114,16 @@ jQuery(document).ready(function ($) {
 
 
 // custom Select
-    function custom_select() {
+    function custom_select(food_fields) {
+        var selector;
+        if (food_fields == 'food-fields'){
+            selector = $('#category-selector');
+        } else {
+            selector = $('#family-selector-m');
+        }
 
 
-        $('select.custom-select').each(function () {
+        selector.each(function () {
             var $this = $(this), numberOfOptions = $(this).children('option').length;
 
             $this.addClass('select-hidden');
@@ -229,7 +235,7 @@ jQuery(document).ready(function ($) {
             success: function (data) {
                 if (data) {
                     $('.ajaxed-data').html(data); // insert new posts
-                    custom_select();
+                    custom_select('food-fields');
 
 
                 }
