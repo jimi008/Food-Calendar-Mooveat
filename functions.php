@@ -830,7 +830,7 @@ function fc_enqueue_asset() {
 
     global $wp_query;
 
-    if( is_page_template('calendar') ){
+    if( is_page_template('template-calendar.php') ){
 
     wp_enqueue_style( 'calendar', get_stylesheet_directory_uri().'/css/calendar.css' );
 
@@ -896,12 +896,3 @@ function my_theme_hide_admin_bar($bool) {
     endif;
 }
 add_filter('show_admin_bar', 'my_theme_hide_admin_bar');
-
-function add_allowed_origins($origins) {
-    $origins[] = 'http://a14819f6.ngrok.io';
-    $origins[] = 'http://localhost:7880';
-    $origins[] = 'http://192.168.8.111:7880';
-    $origins[] = 'http://192.168.8.111:5566';
-    return $origins;
-}
-add_filter('allowed_http_origins', 'add_allowed_origins');
