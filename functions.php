@@ -822,11 +822,15 @@ function add_gravity_styles_scripts($form){
 
 //add_filter( 'gform_pre_render_1', 'add_gravity_styles_scripts' );
 
+/**
+ * Enqueue assets for Food Calendar template-calendar.php
+ */
+
 function fc_enqueue_asset() {
 
     global $wp_query;
 
-    if( is_page('calendar') ){
+    if( is_page_template('calendar') ){
 
     wp_enqueue_style( 'calendar', get_stylesheet_directory_uri().'/css/calendar.css' );
 
@@ -843,14 +847,15 @@ function fc_enqueue_asset() {
     wp_enqueue_script( 'ajax-food' );
     }
 }
-
 add_action( 'wp_enqueue_scripts', 'fc_enqueue_asset' );
 
-
+/**
+ * Food calendar ajax handler
+ * Ajax js/script.js
+ */
 function food_products_ajax_handler(){
 
     check_ajax_referer('load_more_posts', 'security');
-
     $args = json_decode( stripslashes( $_POST['query'] ), true );
     $food_post_id = $_POST['id'];
 
@@ -865,13 +870,11 @@ function food_products_ajax_handler(){
 
     if ($foods_query->have_posts()) :
 
-
         while ($foods_query->have_posts()) : $foods_query->the_post();
 
             get_template_part('template-parts/content', 'calendar');
 
         endwhile;
-
 
     endif;
 
@@ -882,6 +885,17 @@ add_action('wp_ajax_loadfood', 'food_products_ajax_handler'); // wp_ajax_{action
 add_action('wp_ajax_nopriv_loadfood', 'food_products_ajax_handler'); // wp_ajax_nopriv_{action}
 
 
+/**
+ * Hide admin bar at template-calendar.php
+ */
+function my_theme_hide_admin_bar($bool) {
+    if ( is_page_template( 'template-calendar.php' ) ) :
+        return false;
+    else :
+        return $bool;
+    endif;
+}
+add_filter('show_admin_bar', 'my_theme_hide_admin_bar');
 
 function add_allowed_origins($origins) {
     $origins[] = 'http://a14819f6.ngrok.io';
