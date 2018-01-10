@@ -208,7 +208,7 @@ get_header('calendar');
             <div class="row">
 
                 <!--Calendar-->
-                <div class="col-md-7">
+                <div class="col-md-7 cal-wrap">
 
                     <!-- Month bar -->
                     <?php
@@ -222,7 +222,8 @@ get_header('calendar');
 
                     if (!empty($terms) && !is_wp_error($terms)) :
 
-                        ?>
+                    ?>
+                    <div class="cal-head">
                         <div id="month-bar">
                             <div class="container-fluid">
                                 <div class="row">
@@ -316,10 +317,10 @@ get_header('calendar');
 
                             </form>
                         </div>
-                    <?php endif; ?>
+                        <?php endif; ?>
 
-                    <!-- Dropdown Area End -->
-
+                        <!-- Dropdown Area End -->
+                    </div>
                     <!-- Product Holder -->
 
                     <div id="products">
@@ -495,4 +496,4 @@ get_header('calendar');
 
     <!-- Calendar view End -->
 
-<?php get_footer(); ?>
+<?php get_footer('calendar'); ?>

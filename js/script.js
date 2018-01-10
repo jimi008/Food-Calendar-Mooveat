@@ -1,4 +1,3 @@
-//paste this code under the head tag or in a separate js file.
 // Wait for window load
 (function ($) {
     $(window).load(function () {
@@ -107,16 +106,25 @@ jQuery(document).ready(function ($) {
 // sticky
 
 
-    $("#month-bar").sticky({topSpacing: 0});
+    // $("#month-bar").sticky({topSpacing: 0});
+    //
+    // $("#dropdown-holder").sticky({topSpacing: 70});
+    // $("#detail-header").sticky({topSpacing: 0});
+    var calWrapper = $('.cal-wrap');
+    var calWrapperWidth = calWrapper.width();
+    var calWrapperHeight = calWrapper.height();
+    $('.cal-head').css('width', calWrapperWidth);
 
-    $("#dropdown-holder").sticky({topSpacing: 70});
-    $("#detail-header").sticky({topSpacing: 0});
-
+    $(window).resize(function() {
+    var calWrapper = $('.cal-wrap');
+    var calWrapperWidth = calWrapper.width();
+    $('.cal-head').css('width', calWrapperWidth);
+    });
 
 // custom Select
     function custom_select(food_fields) {
         var selector;
-        if (food_fields == 'food-fields'){
+        if (food_fields == 'food-fields') {
             selector = $('#category-selector');
         } else {
             selector = $('#family-selector-m');
@@ -208,10 +216,7 @@ jQuery(document).ready(function ($) {
         $(".tint").addClass("show");
         $(".btn-close").addClass("show");
         $("body").addClass("hidescroll");
-        if (window.innerWidth < 992) {
-            //var h = $("#detail-header").height();
-            // $("#detail").css("paddingTop", h + 10);
-        }
+
 
         //ajax magic
         var button = $(this);
@@ -220,7 +225,6 @@ jQuery(document).ready(function ($) {
         data = {
             'action': 'loadfood',
             'query': ajax_food_params.posts,
-            'security': ajax_food_params.security,
             'id': id
 
         };
@@ -230,12 +234,27 @@ jQuery(document).ready(function ($) {
             data: data,
             type: 'POST',
             beforeSend: function (xhr) {
-                $('.ajaxed-data').html('<div class="post-loader"></div>'); // change the button text, you can also add a preloader image
+                $('.ajaxed-data').html('' +
+                    '<div class="post-loader">' +
+                    '<svg width="26px" height="26px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="uil-ripple"><rect x="0" y="0" width="100" height="100" fill="none" class="bk"></rect><g> <animate attributeName="opacity" dur="2s" repeatCount="indefinite" begin="0s" keyTimes="0;0.33;1" values="1;1;0"></animate><circle cx="50" cy="50" r="40" stroke="#8ECCC0" fill="none" stroke-width="6" stroke-linecap="round"><animate attributeName="r" dur="2s" repeatCount="indefinite" begin="0s" keyTimes="0;0.33;1" values="0;22;44"></animate></circle></g><g><animate attributeName="opacity" dur="2s" repeatCount="indefinite" begin="1s" keyTimes="0;0.33;1" values="1;1;0"></animate><circle cx="50" cy="50" r="40" stroke="#FBBA30" fill="none" stroke-width="6" stroke-linecap="round"><animate attributeName="r" dur="2s" repeatCount="indefinite" begin="1s" keyTimes="0;0.33;1" values="0;22;44"></animate></circle></g></svg>' +
+                    '</div>');
             },
             success: function (data) {
                 if (data) {
+                    var productWrapper = $('#detail');
+                    productWrapper.scrollTop(0);
                     $('.ajaxed-data').html(data); // insert new posts
                     custom_select('food-fields');
+                    var productHeader = $('#detail-header');
+                    var productHeaderHeight = productHeader.height();
+                    var descriptionHeight = productWrapper.height() - productHeaderHeight;
+                    var dDescHeight = calWrapperHeight - productHeaderHeight;
+                    $('.description').css('height', dDescHeight);
+                    if (window.innerWidth < 992) {
+                        $('.description').css({'margin-top': productHeaderHeight,'height': descriptionHeight});
+                        
+                    }
+
 
 
                 }
