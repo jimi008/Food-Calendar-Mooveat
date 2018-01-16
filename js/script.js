@@ -252,7 +252,7 @@ jQuery(document).ready(function ($) {
                     $('.description').css('height', dDescHeight);
                     if (window.innerWidth < 992) {
                         $('.description').css({'margin-top': productHeaderHeight,'height': descriptionHeight});
-                        
+
                     }
 
 

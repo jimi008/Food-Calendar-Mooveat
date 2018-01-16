@@ -349,6 +349,7 @@ get_header('calendar');
 
                                     $args = array(
                                         'post_type' => 'mve_produit_alim',
+                                        posts_per_page => -1,
                                         'tax_query' => array(
                                             array(
                                                 'taxonomy' => 'categorie_produit_alimentaire',
