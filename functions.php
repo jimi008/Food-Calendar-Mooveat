@@ -551,6 +551,23 @@ function cat_prod_point_vente_label_query( $args, $field ) { // set the list of 
 
 add_filter('acf/fields/taxonomy/wp_list_categories', 'cat_prod_point_vente_label_query', 10, 2);
 
+/**** filter only products categories from nomenclature in "Produits alimentaires" admin edition ****/
+
+function cat_food_products_filter( $args, $field )
+{ // set the list of mooveat food products cats for each acf fields
+
+    //error_log(print_r($field,true));
+
+    if($field['_name']=='categorie_mooveat' && $field['key']=='field_59fa1216d74f5'){
+        $catId = get_term_by( 'slug', 'produits', 'categorie_producteur_point_vente')->term_id;
+        $args['child_of'] = $catId;
+    }
+    return $args;
+}
+
+add_filter('acf/fields/taxonomy/query', 'cat_food_products_filter', 10, 2);
+
+
 
 function mve_acf_load_value( $value, $post_id, $field ) // load cats in acf fields for each custom post
 {
@@ -822,6 +839,59 @@ function add_gravity_styles_scripts($form){
 
 //add_filter( 'gform_pre_render_1', 'add_gravity_styles_scripts' );
 
+
+/**************************************************************************************************/
+// @see https://developer.wordpress.org/reference/hooks/get_terms_args/
+add_filter( 'get_terms_args', 'categorie_producteur_point_vente_filter', 10, 2 );
+
+function categorie_producteur_point_vente_filter( $args, $taxonomies ) {
+    global $pagenow;
+
+    //error_log(wp_debug_backtrace_summary());
+
+    if ( 'edit-tags.php' !== $pagenow || ! in_array( 'categorie_producteur_point_vente', $taxonomies, true ) ) { return $args; }
+
+    // Sort by most recently added terms, instead of alphabetically
+    //$args['orderby'] = 'term_id';
+    //$args['order'] = 'desc';
+
+    // Filter by term meta
+    $meta_key = ( isset( $_GET['meta_key'] ) ) ? sanitize_text_field( $_GET['meta_key'] ) : null;
+    $meta_value = ( isset( $_GET['meta_value'] ) ) ? sanitize_text_field( $_GET['meta_value'] ) : null;
+
+    $slug_id_array = array(
+        'centre-logistique'=>758,
+        'label'=>56,
+        'point-de-vente'=>751,
+        'pomona'=>760,
+        'producteur'=>750,
+        'produits'=>671
+    );
+
+    $exclude_array = array();
+
+    if ( 'child_of_slug' === $meta_key && $meta_value && ($args['child_of']==0 || $args['child_of']=='') ) {
+        /*$args['meta_key'] = $meta_key;
+        $args['meta_value'] = $meta_value;*/
+        $args['taxonomy'] = 'categorie_producteur_point_vente';
+        foreach ($slug_id_array as $label=>$term_id){
+            if($label!==$meta_value && $meta_value!=='all'){
+                $exclude_array[] = $term_id;
+            }
+        }
+
+        //error_log(print_r($exclude_array,true));
+        $args['exclude_tree'] = $exclude_array;
+        $args['hide_empty'] = false;
+    }
+
+    //error_log(print_r($args['child_of'],true));
+
+    return $args;
+}
+
+
+/**************************************************************************************************/
 /**
  * Enqueue assets for Food Calendar template-calendar.php
  */
