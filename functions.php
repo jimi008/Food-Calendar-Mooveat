@@ -841,7 +841,8 @@ function add_gravity_styles_scripts($form){
 
 
 /**************************************************************************************************/
-// @see https://developer.wordpress.org/reference/hooks/get_terms_args/
+// @see https://developer.wordpress.org/reference/hooks/get_terms_args/ filters for Nomenclature backoffice menu
+
 add_filter( 'get_terms_args', 'categorie_producteur_point_vente_filter', 10, 2 );
 
 function categorie_producteur_point_vente_filter( $args, $taxonomies ) {
