@@ -414,14 +414,14 @@ body {
       }
 
       .product-title {
-        font-size: 36px;
+        font-size: 27px;
         color: $blue-green;
         font-weight: bold;
         display: inline-block;
         vertical-align: top;
         margin-left: 10px;
         
-        width: 77%;
+        width: 70%;
         line-height: 1;
       }
 
@@ -694,7 +694,7 @@ body {
   background: $gray-light;
   border: none;
   color: $gray-dark;
-  font-size: 20px;
+  font-size: 17px;
   padding: 7px;
   outline: none;
   @include tablet {
