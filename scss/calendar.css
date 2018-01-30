@@ -261,13 +261,13 @@ body {
           width: 90%;
           height: auto; }
       #detail #detail-header .head .product-title {
-        font-size: 36px;
+        font-size: 27px;
         color: #8eccc0;
         font-weight: bold;
         display: inline-block;
         vertical-align: top;
         margin-left: 10px;
-        width: 77%;
+        width: 70%;
         line-height: 1; }
       @media (max-width: 991px) {
         #detail #detail-header .head {
@@ -277,8 +277,8 @@ body {
             width: 80px;
             line-height: 80px; }
           #detail #detail-header .head .product-title {
-            font-size: 27px;
-            width: 70%; } }
+            font-size: 26px;
+            width: 63%; } }
     #detail #detail-header .bar-chart {
       padding: 15px 0;
       margin-bottom: 15px;
