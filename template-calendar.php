@@ -217,7 +217,7 @@ get_header('calendar');
                         'taxonomy' => 'categorie_produit_alimentaire',
                         'hide_empty' => false,
                     ));
-
+                    global $food_family;
                     $food_family = array();
 
                     if (!empty($terms) && !is_wp_error($terms)) :
@@ -349,7 +349,9 @@ get_header('calendar');
 
                                     $args = array(
                                         'post_type' => 'mve_produit_alim',
-                                        posts_per_page => -1,
+                                        'posts_per_page' => -1,
+                                        'orderby' => 'title',
+                                        'order' => 'ASC',
                                         'tax_query' => array(
                                             array(
                                                 'taxonomy' => 'categorie_produit_alimentaire',
@@ -362,12 +364,14 @@ get_header('calendar');
                                     // the query
                                     $foods_query = new WP_Query($args);
 
+
                                     if ($foods_query->have_posts()) :
 
                                         while ($foods_query->have_posts()) : $foods_query->the_post();
 
-                                            $label_color = (color_class('') == 'peach') ? 'orange' : 'green';
+                                            global $post;
 
+                                            $label_color = (color_class('') == 'peach') ? 'orange' : 'green';
                                             $image = get_field('image_produit_alimentaire');
                                             $size = 'thumbnail'; // (thumbnail, medium, large, full or custom size)
 
@@ -375,7 +379,9 @@ get_header('calendar');
                                             <!--product-->
                                             <a class="p-label <?php echo $label_color; ?>"
                                                data-id="<?php echo get_the_ID(); ?>"
-                                               data-family="<?php echo color_class('slug') ?>">
+                                               data-family="<?php echo color_class('slug') ?>"
+                                            data-slug="<?php echo $post->post_name; ?>"
+                                            >
                                                 <div class="image-holder">
                                                     <?php if (!empty($image)): ?>
                                                         <img src="<?php echo $image['url']; ?>"
@@ -422,10 +428,12 @@ get_header('calendar');
                                             <?php
                                             // the query
                                             $foods_query = new WP_Query($args);
+                                            global $post;
 
                                             if ($foods_query->have_posts()) :
 
                                                 while ($foods_query->have_posts()) : $foods_query->the_post();
+                                                    $season = '';
 
                                                     // check if the repeater field has rows of data
                                                     if (have_rows('calendrier_zone_geo')):
@@ -434,17 +442,21 @@ get_header('calendar');
                                                         while (have_rows('calendrier_zone_geo')) : the_row();
 
                                                             $season = get_sub_field($month);
+
                                                         endwhile;
 
                                                     endif;
 
                                                     $season_check = $season != 0 ? true : false;
+                                                    $color = ($season_check == true) ? color_class():"";
 
-                                                    if ($season_check == true) {
-                                                        echo '<div class="cell ' . color_class() . '" data-season="' . $season . '" data-id="' . get_the_ID() . '" data-family="' . color_class('slug') . '"></div>';
-                                                    } else {
-                                                        echo '<div class="cell" data-season="' . $season . '" data-id="' . get_the_ID() . '" data-family="' . color_class('slug') . '"></div>';
-                                                    }
+                                                        $cell = '<div class="cell ' . $color . '" 
+                                                        data-season="' . $season . '" 
+                                                        data-id="' . get_the_ID() . '" 
+                                                        data-family="' . color_class('slug') . '"
+                                                        data-slug="' . $post->post_name . '"></div>';
+
+                                                        echo $cell;
 
                                                     ?>
 

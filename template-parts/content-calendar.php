@@ -141,7 +141,7 @@
     ?>
     <form action="#">
         <select title="Select heading" name="#" id="category-selector" class="select-dropdown custom-select"
-                onchange="location = this.options[this.selectedIndex].value; ">
+                >
             <option value="1">Select</option>
 
             <?php

@@ -178,11 +178,24 @@ jQuery(document).ready(function ($) {
 
         });
     }
-
     custom_select();
 
-    //show-hide food rows desktop - checkbox
+    function smooth_scrolling(){
+        $('.select-options li').on('click', function (e) {
+            e.preventDefault();
+            var href = $(this).attr('rel');
+            var current_div = $(href);
+            var target_div = $(".description");
+            var animateTo = target_div.scrollTop() - target_div.position().top + current_div.position().top ;
+            console.log(animateTo);
+            target_div.animate(
+                {scrollTop: animateTo},
+                "slow"
+            );
+        });
+    }
 
+    //show-hide food rows desktop - checkbox
     $("input[type=checkbox]").change(function () {
         var data_family = $(this).attr('data-family');
         var rows = $('.p-label[data-family=' + data_family + ']');
@@ -207,6 +220,31 @@ jQuery(document).ready(function ($) {
         $(cell).show();
     });
 
+    //Search auto-complete
+    var search_input = $('#header-search-bar-input');
+    search_input.autocomplete({
+        source: availableFood
+    });
+
+    $(search_input).on('input', function() {
+        var search_selection = $(this).val();
+        if (!search_selection) {
+            $('.p-label, .cell').show();
+        }
+    });
+
+    $("#header-search-trigger").click(function () {
+        search_selection = search_input.val();
+        if (search_selection) {
+            var rows = $('.p-label[data-slug=' + search_selection + ']');
+            var cell = $('.cell[data-slug=' + search_selection + ']');
+            $('.p-label, .cell').hide();
+            $(rows).show();
+            $(cell).show();
+        } else {
+            $('.p-label, .cell').show();
+        }
+    });
 
     //ajax magic
     $(".p-label").click(function () {
@@ -245,6 +283,7 @@ jQuery(document).ready(function ($) {
                     productWrapper.scrollTop(0);
                     $('.ajaxed-data').html(data); // insert new posts
                     custom_select('food-fields');
+                    smooth_scrolling();
                     var productHeader = $('#detail-header');
                     var productHeaderHeight = productHeader.height();
                     var descriptionHeight = productWrapper.height() - productHeaderHeight;

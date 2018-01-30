@@ -1,5 +1,6 @@
-@import url("https://fonts.googleapis.com/css?family=Nunito:300,400,400i,600,700,900");
-@import url(slick.css);
+/**
+Calendar.css
+ */
 /* Paste this css to your style sheet file or under head tag */
 /* This only works with JavaScript,
 if it's not present, don't show loader */
@@ -22,6 +23,8 @@ if it's not present, don't show loader */
     position: fixed;
     top: 50%;
     left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%); }
 
 .post-loader {
@@ -33,6 +36,8 @@ if it's not present, don't show loader */
     position: absolute;
     top: 50%;
     left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%); }
 
 body {
@@ -46,6 +51,7 @@ body {
     position: relative; }
 
 #calendar {
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
   margin-top: 80px; }
   @media (min-width: 1024px) {
@@ -147,6 +153,7 @@ body {
           height: 100%;
           position: relative;
           z-index: 1;
+          -webkit-box-sizing: border-box;
           box-sizing: border-box;
           display: block;
           margin-bottom: 7px; }
@@ -201,6 +208,8 @@ body {
   left: 0;
   visibility: hidden;
   opacity: 0;
+  -webkit-transition: .35s;
+  -o-transition: .35s;
   transition: .35s; }
   @media (max-width: 991px) {
     .tint.show {
@@ -252,13 +261,13 @@ body {
           width: 90%;
           height: auto; }
       #detail #detail-header .head .product-title {
-        font-size: 27px;
+        font-size: 36px;
         color: #8eccc0;
         font-weight: bold;
         display: inline-block;
         vertical-align: top;
         margin-left: 10px;
-        width: 70%;
+        width: 77%;
         line-height: 1; }
       @media (max-width: 991px) {
         #detail #detail-header .head {
@@ -268,8 +277,8 @@ body {
             width: 80px;
             line-height: 80px; }
           #detail #detail-header .head .product-title {
-            font-size: 26px;
-            width: 63%; } }
+            font-size: 27px;
+            width: 70%; } }
     #detail #detail-header .bar-chart {
       padding: 15px 0;
       margin-bottom: 15px;
@@ -281,6 +290,7 @@ body {
         list-style: none; }
         #detail #detail-header .bar-chart ul li {
           float: left;
+          -webkit-box-sizing: border-box;
           box-sizing: border-box;
           width: calc(100% / 12 - 5px);
           margin-left: 4px;
@@ -367,6 +377,8 @@ body {
       padding: 10px 10px 10px;
       visibility: hidden;
       opacity: 0;
+      -webkit-transition: .35s;
+      -o-transition: .35s;
       transition: .35s;
       -webkit-border-radius: 6px;
       -moz-border-radius: 6px;
@@ -409,6 +421,7 @@ body {
         left: 20px;
         right: 20px;
         bottom: 20px;
+        -webkit-box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
         box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
         -webkit-border-radius: 6px;
         -moz-border-radius: 6px;
@@ -452,6 +465,7 @@ body {
   @media (max-width: 991px) {
     .select-dropdown, .select-styled {
       height: 32px;
+      -webkit-box-sizing: border-box;
       box-sizing: border-box;
       line-height: 32px;
       padding: 0 7px;
@@ -460,6 +474,7 @@ body {
 @media (max-width: 991px) {
   .select-options li {
     height: 32px !important;
+    -webkit-box-sizing: border-box !important;
     box-sizing: border-box !important;
     line-height: 32px !important;
     font-size: 15px !important;
@@ -513,6 +528,8 @@ body {
   background: url("../images/checked.png") no-repeat center center;
   top: -3px;
   left: 0;
+  -webkit-transition: all .2s;
+  -o-transition: all .2s;
   transition: all .2s;
   width: 21px;
   height: 20px;
@@ -521,15 +538,20 @@ body {
 /* checked mark aspect changes */
 [type="checkbox"]:not(:checked) + label:after {
   opacity: 0;
+  -webkit-transform: scale(0);
+  -ms-transform: scale(0);
   transform: scale(0); }
 
 [type="checkbox"]:checked + label:after {
   opacity: 1;
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
   transform: scale(1); }
 
 /* disabled checkbox */
 [type="checkbox"]:disabled:not(:checked) + label:before,
 [type="checkbox"]:disabled:checked + label:before {
+  -webkit-box-shadow: none;
   box-shadow: none;
   border-color: #bbb;
   background-color: #ddd; }
@@ -559,6 +581,8 @@ body {
           color: white;
           margin: 0 10px;
           text-decoration: none;
+          -webkit-transition: .35s;
+          -o-transition: .35s;
           transition: .35s; }
           #header .top-bar .top-nav li a:hover {
             color: #fbba30; }
@@ -577,6 +601,7 @@ body {
   #header .search-bar {
     height: 66px;
     background: #fff;
+    -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1); }
     #header .search-bar .search-holder {
       float: right; }
@@ -591,6 +616,7 @@ body {
           height: 37px;
           width: 371px;
           padding: 5px;
+          -webkit-box-sizing: border-box;
           box-sizing: border-box;
           outline: none;
           font-size: 16px; }
@@ -636,6 +662,8 @@ body {
           background: white; }
         #header .search-bar .logo-holder .logo-mobile {
           display: inline-block !important;
+          -webkit-transform: translateX(36%);
+          -ms-transform: translateX(36%);
           transform: translateX(36%); }
         #header .search-bar .logo-holder .logo-desktop {
           display: none; } }
@@ -713,6 +741,7 @@ body {
     opacity: 0.1; }
   100% {
     opacity: 1; } }
+
 @-moz-keyframes flickerAnimation {
   0% {
     opacity: 1; }
@@ -720,6 +749,7 @@ body {
     opacity: 0.1; }
   100% {
     opacity: 1; } }
+
 @-ms-keyframes flickerAnimation {
   0% {
     opacity: 1; }
@@ -727,6 +757,7 @@ body {
     opacity: 0.1; }
   100% {
     opacity: 1; } }
+
 @-o-keyframes flickerAnimation {
   0% {
     opacity: 1; }
@@ -734,6 +765,7 @@ body {
     opacity: 0.1; }
   100% {
     opacity: 1; } }
+
 @keyframes flickerAnimation {
   0% {
     opacity: 1; }
@@ -741,6 +773,7 @@ body {
     opacity: 0.1; }
   100% {
     opacity: 1; } }
+
 .animate-flicker {
   -webkit-animation: flickerAnimation 2s 4;
   -khtml-animation: flickerAnimation 2s 4;
@@ -845,6 +878,7 @@ body {
     text-align: center;
     z-index: 1001;
     background-color: #fff;
+    -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1); }
     #page #header-search-bar img {
       position: relative;
@@ -1287,5 +1321,3 @@ body {
           box-shadow: none;
           outline: none;
           border: none; }
-
-/*# sourceMappingURL=calendar.css.map */

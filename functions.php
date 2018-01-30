@@ -903,7 +903,8 @@ function fc_enqueue_asset() {
 
     if( is_page_template('template-calendar.php') ){
 
-    wp_enqueue_style( 'calendar', get_stylesheet_directory_uri().'/css/calendar.css' );
+    wp_enqueue_style( 'slick', get_stylesheet_directory_uri().'/css/slick.css' );
+    wp_enqueue_style( 'calendar', get_stylesheet_directory_uri().'/scss/calendar.css' );
 
     wp_enqueue_script( 'slick', get_stylesheet_directory_uri() . '/js/slick.js', array('jquery') );
 //    wp_enqueue_script( 'sticky', get_stylesheet_directory_uri() . '/js/jquery.sticky.js', array('jquery') );
