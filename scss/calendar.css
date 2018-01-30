@@ -277,8 +277,8 @@ body {
             width: 80px;
             line-height: 80px; }
           #detail #detail-header .head .product-title {
-            font-size: 26px;
-            width: 63%; } }
+            font-size: 27px;
+            width: 70%; } }
     #detail #detail-header .bar-chart {
       padding: 15px 0;
       margin-bottom: 15px;
@@ -459,7 +459,7 @@ body {
   background: #eeeeee;
   border: none;
   color: #666666;
-  font-size: 20px;
+  font-size: 17px;
   padding: 7px;
   outline: none; }
   @media (max-width: 991px) {
