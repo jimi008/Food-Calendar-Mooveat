@@ -22,7 +22,7 @@ $blue-green: #8eccc0;
 
 $yellow: #fbba30;
 
-// Media Query
+// Media Query Mixin
 
 @mixin tablet {
   @media (max-width: 991px) {
@@ -36,6 +36,12 @@ $yellow: #fbba30;
   }
 }
 
+//Container width change
+@media (min-width: 1542px) {
+  .container{
+    width: 1500px;
+  }
+}
 /* Paste this css to your style sheet file or under head tag */
 /* This only works with JavaScript,
 if it's not present, don't show loader */
@@ -81,6 +87,7 @@ if it's not present, don't show loader */
     transform: translate(-50%, -50%);
   }
 }
+/* End loader */
 
 // Calendar Styles
 
@@ -109,6 +116,11 @@ body {
     position: relative;
   }
 
+}
+
+.no-padding {
+  padding: 0;
+  margin: 0;
 }
 
 #calendar {
@@ -397,6 +409,9 @@ body {
       //padding: 20px 0 10px;
       padding: 20px 0 0;
 
+      .fp-img {
+        width: 115px;
+      }
       .image-holder {
         width: 90px;
         height: 90px;
@@ -421,10 +436,9 @@ body {
         font-weight: bold;
         display: inline-block;
         vertical-align: top;
-        margin-left: 10px;
-        
-        width: 70%;
-        line-height: 1;
+        //margin-left: 10px;
+        //width: 70%;
+        //line-height: 1;
       }
 
       @include tablet {
@@ -436,7 +450,7 @@ body {
         }
         .product-title {
           font-size: 26px;
-          width: 63%;
+          //width: 63%;
 
         }
       }
@@ -531,12 +545,11 @@ body {
     }
 
     form {
-      width: calc(100% - 105px);
+      //width: calc(100% - 105px);
       //display: inline-block;
-      float: right;
+      //float: right;
       //margin-top: -50px;
       z-index: 9999;
-
       display: block;
       margin: 0;
     }
@@ -608,10 +621,13 @@ body {
     .head {
 
     }
+    .fp-title {
+      padding-right: 15px;
+    }
     form {
-      width: calc(100% - 95px) !important;
-      margin-left: 100px;
-      margin-top: -45px;
+      //width: calc(100% - 95px) !important;
+      //margin-left: 100px;
+      //margin-top: -45px;
     }
 
     .bar-chart {

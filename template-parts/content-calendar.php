@@ -20,23 +20,6 @@
     $image = get_field('image_produit_alimentaire');
     $size = 'thumbnail'; // (thumbnail, medium, large, full or custom size)
 
-    ?>
-
-    <div class="head">
-        <div class="image-holder">
-            <?php if (!empty($image)): ?>
-                <img src="<?php echo $image['url']; ?>"
-                     alt="<?php echo $image['alt']; ?>">
-            <?php endif; ?>
-        </div>
-        <div class="product-title">
-            <?php the_title(); ?>
-        </div>
-    </div>
-
-    <!--Select-->
-    <?php
-
     $fields_tabs = array(
         "Carte d'identité" => array(
             'carte_identite',
@@ -139,22 +122,45 @@
     }
 
     ?>
-    <form action="#">
-        <select title="Select heading" name="#" id="category-selector" class="select-dropdown custom-select"
-                >
-            <option value="1">Select</option>
 
-            <?php
-            foreach ($fields_tabs as $tab => $fields) {
+    <div class="head">
 
-                if (fc_check_fields($fields)) {
-                    echo '<option value="#' . $fields[0] . '">' . $tab . '</option>';
-                }
+        <div class="row">
+            <div class="col-xs-4 col-sm-2 col-md-3 fp-img">
+                <div class="image-holder">
+                    <?php if (!empty($image)): ?>
+                        <img src="<?php echo $image['url']; ?>"
+                             alt="<?php echo $image['alt']; ?>">
+                    <?php endif; ?>
+                </div>
+            </div>
+            <div class="col-xs-8 col-sm-10 col-md-9 no-padding fp-title">
+                <div class="product-title">
+                    <?php the_title(); ?>
+                </div>
 
-            }
-            ?>
-        </select>
-    </form>
+                <!--Select-->
+                <form action="#">
+                    <select title="Select heading" name="#" id="category-selector" class="select-dropdown custom-select"
+                    >
+                        <option value="1">Select</option>
+
+                        <?php
+                        foreach ($fields_tabs as $tab => $fields) {
+
+                            if (fc_check_fields($fields)) {
+                                echo '<option value="#' . $fields[0] . '">' . $tab . '</option>';
+                            }
+
+                        }
+                        ?>
+                    </select>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
 
     <!--Chart-->
 

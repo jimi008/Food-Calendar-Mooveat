@@ -187,6 +187,7 @@ get_header('calendar');
             <div id="header-search-bar-input-container" class="ui-front scrollable">
                 <i class="icon-infos-pratiques popup-search-info"></i>
                 <input type="text" placeholder="Recherche" id="header-search-bar-input" class="map-search-input">
+                <input type="hidden" id="header-search-bar-value">
                 <div class="placeholder-mask">
                     <div class="layer">Saisissez une adresse complète ou des mots clés parmi les propositions qui
                         s'afficheront (mots clés séparés par un point-virgule)

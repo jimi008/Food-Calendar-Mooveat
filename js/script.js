@@ -180,6 +180,7 @@ jQuery(document).ready(function ($) {
     }
     custom_select();
 
+    // Smooth scrolling for product detail
     function smooth_scrolling(){
         $('.select-options li').on('click', function (e) {
             e.preventDefault();
@@ -220,27 +221,57 @@ jQuery(document).ready(function ($) {
         $(cell).show();
     });
 
-    //Search auto-complete
+    //Search auto-complete jQuery UI
     var search_input = $('#header-search-bar-input');
+    var search_value = $("#header-search-bar-value");
     search_input.autocomplete({
-        source: availableFood
+        source: availableFood,
+        select: function(event, ui) {
+            event.preventDefault();
+            $(this).val(ui.item.label);
+            search_value.val(ui.item.value);
+
+        },
+        focus: function(event, ui) {
+            event.preventDefault();
+            $(this).val(ui.item.label);
+            search_value.val(ui.item.value);
+        }
     });
 
+    //Reset products in calendar if search field empty
     $(search_input).on('input', function() {
-        var search_selection = $(this).val();
+        var search_selection = search_value.val();
         if (!search_selection) {
             $('.p-label, .cell').show();
         }
     });
 
+    //Display selective products using search field
     $("#header-search-trigger").click(function () {
-        search_selection = search_input.val();
+        var search_selection = search_value.val();
         if (search_selection) {
-            var rows = $('.p-label[data-slug=' + search_selection + ']');
-            var cell = $('.cell[data-slug=' + search_selection + ']');
+            var rows = $('.p-label[data-slug*=' + search_selection + ']');
+            var cell = $('.cell[data-slug*=' + search_selection + ']');
             $('.p-label, .cell').hide();
             $(rows).show();
             $(cell).show();
+
+            //ajax magic
+            var button = $(this);
+            var id = $('[data-slug=' + search_selection + ']').attr('data-id');
+            data = {
+                'action': 'loadfood',
+                'query': ajax_food_params.posts,
+                'id': id
+            };
+            if(id){
+                call_ajax();
+            } else {
+                $('.ajaxed-data').empty();
+            }
+
+
         } else {
             $('.p-label, .cell').show();
         }
@@ -267,40 +298,42 @@ jQuery(document).ready(function ($) {
 
         };
 
-        $.ajax({
-            url: ajax_food_params.ajaxurl, // AJAX handler
-            data: data,
-            type: 'POST',
-            beforeSend: function (xhr) {
-                $('.ajaxed-data').html('' +
-                    '<div class="post-loader">' +
-                    '<svg width="26px" height="26px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="uil-ripple"><rect x="0" y="0" width="100" height="100" fill="none" class="bk"></rect><g> <animate attributeName="opacity" dur="2s" repeatCount="indefinite" begin="0s" keyTimes="0;0.33;1" values="1;1;0"></animate><circle cx="50" cy="50" r="40" stroke="#8ECCC0" fill="none" stroke-width="6" stroke-linecap="round"><animate attributeName="r" dur="2s" repeatCount="indefinite" begin="0s" keyTimes="0;0.33;1" values="0;22;44"></animate></circle></g><g><animate attributeName="opacity" dur="2s" repeatCount="indefinite" begin="1s" keyTimes="0;0.33;1" values="1;1;0"></animate><circle cx="50" cy="50" r="40" stroke="#FBBA30" fill="none" stroke-width="6" stroke-linecap="round"><animate attributeName="r" dur="2s" repeatCount="indefinite" begin="1s" keyTimes="0;0.33;1" values="0;22;44"></animate></circle></g></svg>' +
-                    '</div>');
-            },
-            success: function (data) {
-                if (data) {
-                    var productWrapper = $('#detail');
-                    productWrapper.scrollTop(0);
-                    $('.ajaxed-data').html(data); // insert new posts
-                    custom_select('food-fields');
-                    smooth_scrolling();
-                    var productHeader = $('#detail-header');
-                    var productHeaderHeight = productHeader.height();
-                    var descriptionHeight = productWrapper.height() - productHeaderHeight;
-                    var dDescHeight = calWrapperHeight - productHeaderHeight;
-                    $('.description').css('height', dDescHeight);
-                    if (window.innerWidth < 992) {
-                        $('.description').css({'margin-top': productHeaderHeight,'height': descriptionHeight});
-
-                    }
-
-
-
-                }
-            }
-        });
+        call_ajax();
     });
 
+function call_ajax(){
+    $.ajax({
+        url: ajax_food_params.ajaxurl, // AJAX handler
+        data: data,
+        type: 'POST',
+        beforeSend: function (xhr) {
+            $('.ajaxed-data').html('' +
+                '<div class="post-loader">' +
+                '<svg width="26px" height="26px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="uil-ripple"><rect x="0" y="0" width="100" height="100" fill="none" class="bk"></rect><g> <animate attributeName="opacity" dur="2s" repeatCount="indefinite" begin="0s" keyTimes="0;0.33;1" values="1;1;0"></animate><circle cx="50" cy="50" r="40" stroke="#8ECCC0" fill="none" stroke-width="6" stroke-linecap="round"><animate attributeName="r" dur="2s" repeatCount="indefinite" begin="0s" keyTimes="0;0.33;1" values="0;22;44"></animate></circle></g><g><animate attributeName="opacity" dur="2s" repeatCount="indefinite" begin="1s" keyTimes="0;0.33;1" values="1;1;0"></animate><circle cx="50" cy="50" r="40" stroke="#FBBA30" fill="none" stroke-width="6" stroke-linecap="round"><animate attributeName="r" dur="2s" repeatCount="indefinite" begin="1s" keyTimes="0;0.33;1" values="0;22;44"></animate></circle></g></svg>' +
+                '</div>');
+        },
+        success: function (data) {
+            if (data) {
+                var productWrapper = $('#detail');
+                productWrapper.scrollTop(0);
+                $('.ajaxed-data').html(data); // insert new posts
+                custom_select('food-fields');
+                smooth_scrolling();
+                var productHeader = $('#detail-header');
+                var productHeaderHeight = productHeader.height();
+                var descriptionHeight = productWrapper.height() - productHeaderHeight;
+                var dDescHeight = calWrapperHeight - productHeaderHeight;
+                $('.description').css('height', dDescHeight);
+                if (window.innerWidth < 992) {
+                    $('.description').css({'margin-top': productHeaderHeight,'height': descriptionHeight});
+
+                }
+
+
+            }
+        }
+    });
+}
 
 });
 
