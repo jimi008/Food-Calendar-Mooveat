@@ -236,14 +236,21 @@ jQuery(document).ready(function ($) {
             event.preventDefault();
             $(this).val(ui.item.label);
             search_value.val(ui.item.value);
+        },
+        response: function(event, ui) {
+            // ui.content is the array that's about to be sent to the response callback.
+            if (ui.content.length === 0) {
+                search_value.val('');
+            }
         }
     });
 
     //Reset products in calendar if search field empty
     $(search_input).on('input', function() {
-        var search_selection = search_value.val();
+        var search_selection = $(this).val();
         if (!search_selection) {
             $('.p-label, .cell').show();
+            search_value.val('');
         }
     });
 
@@ -274,6 +281,7 @@ jQuery(document).ready(function ($) {
 
         } else {
             $('.p-label, .cell').show();
+            $('.ajaxed-data').empty();
         }
     });
 

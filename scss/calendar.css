@@ -276,7 +276,8 @@ body {
         color: #8eccc0;
         font-weight: bold;
         display: inline-block;
-        vertical-align: top; }
+        vertical-align: top;
+        line-height: 1; }
       @media (max-width: 991px) {
         #detail #detail-header .head {
           padding-top: 0; }
