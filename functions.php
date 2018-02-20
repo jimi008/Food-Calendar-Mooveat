@@ -560,8 +560,17 @@ function cat_food_products_filter( $args, $field )
 
     if($field['_name']=='categorie_mooveat' && $field['key']=='field_59fa1216d74f5'){
         $catId = get_term_by( 'slug', 'produits', 'categorie_producteur_point_vente')->term_id;
-        $args['child_of'] = $catId;
+        $slug_id_array = array(
+            'centre-logistique'=>758,
+            'label'=>56,
+            'point-de-vente'=>751,
+            'pomona'=>760,
+            'producteur'=>750
+        );
+        $args['exclude_tree'] = $slug_id_array;
+
     }
+    //error_log(print_r($args,true));
     return $args;
 }
 
