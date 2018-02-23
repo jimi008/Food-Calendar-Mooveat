@@ -115,10 +115,10 @@ jQuery(document).ready(function ($) {
     var calWrapperHeight = calWrapper.height();
     $('.cal-head').css('width', calWrapperWidth);
 
-    $(window).resize(function() {
-    var calWrapper = $('.cal-wrap');
-    var calWrapperWidth = calWrapper.width();
-    $('.cal-head').css('width', calWrapperWidth);
+    $(window).resize(function () {
+        var calWrapper = $('.cal-wrap');
+        var calWrapperWidth = calWrapper.width();
+        $('.cal-head').css('width', calWrapperWidth);
     });
 
 // custom Select
@@ -178,16 +178,17 @@ jQuery(document).ready(function ($) {
 
         });
     }
+
     custom_select();
 
     // Smooth scrolling for product detail
-    function smooth_scrolling(){
+    function smooth_scrolling() {
         $('.select-options li').on('click', function (e) {
             e.preventDefault();
             var href = $(this).attr('rel');
             var current_div = $(href);
             var target_div = $(".description");
-            var animateTo = target_div.scrollTop() - target_div.position().top + current_div.position().top ;
+            var animateTo = target_div.scrollTop() - target_div.position().top + current_div.position().top;
             console.log(animateTo);
             target_div.animate(
                 {scrollTop: animateTo},
@@ -199,70 +200,75 @@ jQuery(document).ready(function ($) {
     //show-hide food rows desktop - checkbox
     $("input[type=checkbox]").change(function () {
         var data_family = $(this).attr('data-family');
-        var rows = $('.p-label[data-family=' + data_family + ']');
-        var cell = $('.cell[data-family=' + data_family + ']');
+        var $rows = $('.p-label[data-family=' + data_family + ']');
+        var $cell = $('.cell[data-family=' + data_family + ']');
         if (this.checked) {
-            $(rows).show();
-            $(cell).show();
+            $rows.show();
+            $cell.show();
         } else {
-            $(rows).hide();
-            $(cell).hide();
+            $rows.hide();
+            $cell.hide();
         }
     });
 
     //show-hide food rows mobile - select field
     $("#family-selector-m").change(function () {
         var data_family = $(this).val();
-        var rows = $('.p-label[data-family=' + data_family + ']');
-        var cell = $('.cell[data-family=' + data_family + ']');
+        var $rows = $('.p-label[data-family=' + data_family + ']');
+        var $cell = $('.cell[data-family=' + data_family + ']');
         $('.p-label').hide();
         $('.cell').hide();
-        $(rows).show();
-        $(cell).show();
+        $rows.show();
+        $cell.show();
     });
 
     //Search auto-complete jQuery UI
-    var search_input = $('#header-search-bar-input');
-    var search_value = $("#header-search-bar-value");
-    search_input.autocomplete({
+    var $search_input = $('#header-search-bar-input');
+    var $search_value = $("#header-search-bar-value");
+    $search_input.autocomplete({
         source: availableFood,
-        select: function(event, ui) {
+        select: function (event, ui) {
             event.preventDefault();
             $(this).val(ui.item.label);
-            search_value.val(ui.item.value);
+            $search_value.val(ui.item.value);
 
         },
-        focus: function(event, ui) {
+        focus: function (event, ui) {
             event.preventDefault();
             $(this).val(ui.item.label);
-            search_value.val(ui.item.value);
+            $search_value.val(ui.item.value);
         },
-        response: function(event, ui) {
+        response: function (event, ui) {
             // ui.content is the array that's about to be sent to the response callback.
             if (ui.content.length === 0) {
-                search_value.val('');
+                $search_value.val('');
             }
         }
     });
 
     //Reset products in calendar if search field empty
-    $(search_input).on('input', function() {
+    $search_input.on('input', function () {
         var search_selection = $(this).val();
         if (!search_selection) {
             $('.p-label, .cell').show();
-            search_value.val('');
+            $search_value.val('');
         }
     });
 
     //Display selective products using search field
-    $("#header-search-trigger").click(function () {
-        var search_selection = search_value.val();
+    $("#header-search-trigger").click(searchResults);
+    $search_input.on('autocompleteselect', function (e, ui) {
+        searchResults();
+    });
+
+    function searchResults() {
+        var search_selection = $search_value.val();
         if (search_selection) {
-            var rows = $('.p-label[data-slug*=' + search_selection + ']');
-            var cell = $('.cell[data-slug*=' + search_selection + ']');
+            var $rows = $('.p-label[data-slug*=' + search_selection + ']');
+            var $cell = $('.cell[data-slug*=' + search_selection + ']');
             $('.p-label, .cell').hide();
-            $(rows).show();
-            $(cell).show();
+            $rows.show();
+            $cell.show();
 
             //ajax magic
             var button = $(this);
@@ -272,7 +278,7 @@ jQuery(document).ready(function ($) {
                 'query': ajax_food_params.posts,
                 'id': id
             };
-            if(id){
+            if (id) {
                 call_ajax();
             } else {
                 $('.ajaxed-data').empty();
@@ -283,9 +289,9 @@ jQuery(document).ready(function ($) {
             $('.p-label, .cell').show();
             $('.ajaxed-data').empty();
         }
-    });
+    }
 
-    //ajax magic
+//ajax magic
     $(".p-label").click(function () {
 
         //mobile pop-up show hide
@@ -309,39 +315,40 @@ jQuery(document).ready(function ($) {
         call_ajax();
     });
 
-function call_ajax(){
-    $.ajax({
-        url: ajax_food_params.ajaxurl, // AJAX handler
-        data: data,
-        type: 'POST',
-        beforeSend: function (xhr) {
-            $('.ajaxed-data').html('' +
-                '<div class="post-loader">' +
-                '<svg width="26px" height="26px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="uil-ripple"><rect x="0" y="0" width="100" height="100" fill="none" class="bk"></rect><g> <animate attributeName="opacity" dur="2s" repeatCount="indefinite" begin="0s" keyTimes="0;0.33;1" values="1;1;0"></animate><circle cx="50" cy="50" r="40" stroke="#8ECCC0" fill="none" stroke-width="6" stroke-linecap="round"><animate attributeName="r" dur="2s" repeatCount="indefinite" begin="0s" keyTimes="0;0.33;1" values="0;22;44"></animate></circle></g><g><animate attributeName="opacity" dur="2s" repeatCount="indefinite" begin="1s" keyTimes="0;0.33;1" values="1;1;0"></animate><circle cx="50" cy="50" r="40" stroke="#FBBA30" fill="none" stroke-width="6" stroke-linecap="round"><animate attributeName="r" dur="2s" repeatCount="indefinite" begin="1s" keyTimes="0;0.33;1" values="0;22;44"></animate></circle></g></svg>' +
-                '</div>');
-        },
-        success: function (data) {
-            if (data) {
-                var productWrapper = $('#detail');
-                productWrapper.scrollTop(0);
-                $('.ajaxed-data').html(data); // insert new posts
-                custom_select('food-fields');
-                smooth_scrolling();
-                var productHeader = $('#detail-header');
-                var productHeaderHeight = productHeader.height();
-                var descriptionHeight = productWrapper.height() - productHeaderHeight;
-                var dDescHeight = calWrapperHeight - productHeaderHeight;
-                $('.description').css('height', dDescHeight);
-                if (window.innerWidth < 992) {
-                    $('.description').css({'margin-top': productHeaderHeight,'height': descriptionHeight});
+    function call_ajax() {
+        $.ajax({
+            url: ajax_food_params.ajaxurl, // AJAX handler
+            data: data,
+            type: 'POST',
+            beforeSend: function (xhr) {
+                $('.ajaxed-data').html('' +
+                    '<div class="post-loader">' +
+                    '<svg width="26px" height="26px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="uil-ripple"><rect x="0" y="0" width="100" height="100" fill="none" class="bk"></rect><g> <animate attributeName="opacity" dur="2s" repeatCount="indefinite" begin="0s" keyTimes="0;0.33;1" values="1;1;0"></animate><circle cx="50" cy="50" r="40" stroke="#8ECCC0" fill="none" stroke-width="6" stroke-linecap="round"><animate attributeName="r" dur="2s" repeatCount="indefinite" begin="0s" keyTimes="0;0.33;1" values="0;22;44"></animate></circle></g><g><animate attributeName="opacity" dur="2s" repeatCount="indefinite" begin="1s" keyTimes="0;0.33;1" values="1;1;0"></animate><circle cx="50" cy="50" r="40" stroke="#FBBA30" fill="none" stroke-width="6" stroke-linecap="round"><animate attributeName="r" dur="2s" repeatCount="indefinite" begin="1s" keyTimes="0;0.33;1" values="0;22;44"></animate></circle></g></svg>' +
+                    '</div>');
+            },
+            success: function (data) {
+                if (data) {
+                    var productWrapper = $('#detail');
+                    productWrapper.scrollTop(0);
+                    $('.ajaxed-data').html(data); // insert new posts
+                    custom_select('food-fields');
+                    smooth_scrolling();
+                    var productHeader = $('#detail-header');
+                    var productHeaderHeight = productHeader.height();
+                    var descriptionHeight = productWrapper.height() - productHeaderHeight;
+                    var dDescHeight = calWrapperHeight - productHeaderHeight;
+                    $('.description').css('height', dDescHeight);
+                    if (window.innerWidth < 992) {
+                        $('.description').css({'margin-top': productHeaderHeight, 'height': descriptionHeight});
+
+                    }
+
 
                 }
-
-
             }
-        }
-    });
-}
+        });
+    }
 
-});
+})
+;
 

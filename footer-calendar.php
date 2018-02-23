@@ -42,7 +42,7 @@
         'posts_per_page' => -1,
         'orderby' => 'title',
         'order' => 'ASC',
-        'post_parent' => 0,
+//        'post_parent' => 0,
         'tax_query' => array(
             array(
                 'taxonomy' => 'categorie_produit_alimentaire',
@@ -58,10 +58,11 @@
     if ($foods_parent_query->have_posts()) :
 
     while ($foods_parent_query->have_posts()) : $foods_parent_query->the_post();
+
     global $post;
 
     $availableFood[] = array(
-        'label'  => get_the_title(),
+        'label'  => get_post_field('post_title', $post_id, 'raw'),
         'value' => $post->post_name
     );
 

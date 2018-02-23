@@ -187,10 +187,10 @@ body {
 
   .cal-wrap {
     overflow-y: scroll;
-    height: calc(100vh - 150px);
+    height: calc(100vh - 100px);
     @include desktop {
 
-      height: calc(100vh - 130px);
+      //height: calc(100vh - 130px);
     }
   }
   .cal-head {
@@ -410,7 +410,7 @@ body {
       padding: 20px 0 0;
 
       .fp-img {
-        width: 115px;
+        width: 110px;
       }
       .image-holder {
         width: 90px;
