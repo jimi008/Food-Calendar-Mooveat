@@ -203,11 +203,11 @@ jQuery(document).ready(function ($) {
         var $rows = $('.p-label[data-family=' + data_family + ']');
         var $cell = $('.cell[data-family=' + data_family + ']');
         if (this.checked) {
-            $rows.show();
-            $cell.show();
+            $rows.addClass('active');
+            $cell.addClass('active');
         } else {
-            $rows.hide();
-            $cell.hide();
+            $rows.removeClass('active');
+            $cell.removeClass('active');
         }
     });
 
@@ -216,10 +216,10 @@ jQuery(document).ready(function ($) {
         var data_family = $(this).val();
         var $rows = $('.p-label[data-family=' + data_family + ']');
         var $cell = $('.cell[data-family=' + data_family + ']');
-        $('.p-label').hide();
-        $('.cell').hide();
-        $rows.show();
-        $cell.show();
+        $('.p-label').removeClass('active');
+        $('.cell').removeClass('active');
+        $rows.addClass('active');
+        $cell.addClass('active');
     });
 
     //Search auto-complete jQuery UI
@@ -252,7 +252,7 @@ jQuery(document).ready(function ($) {
     $search_input.on('input', function () {
         var search_selection = $(this).val();
         if (!search_selection) {
-            $('.p-label, .cell').show();
+            $('.p-label, .cell').addClass('active');
             $search_value.val('');
         }
     });
@@ -271,11 +271,13 @@ jQuery(document).ready(function ($) {
                 $childrenRows = $('.p-label[data-direct-parent*=' + search_selection + ']'),
                 $childrenCell = $('.cell[data-direct-parent*=' + search_selection + ']');
 
-            $('.p-label, .cell').hide();
-            $rows.show();
-            $cell.show();
-            $childrenRows.show();
-            $childrenCell.show();
+            $('.p-label, .cell').removeClass('active');
+            $('#products .display-sub-varieties').text('Masquer les sous-variétés').addClass('active');
+
+            $rows.addClass('active');
+            $cell.addClass('active');
+            $childrenRows.addClass('active');
+            $childrenCell.addClass('active');
 
             //ajax magic
             var button = $(this);
@@ -293,33 +295,36 @@ jQuery(document).ready(function ($) {
 
 
         } else {
-            $('.p-label, .cell').show();
+            $('.p-label, .cell').addClass('active');
             $('.ajaxed-data').empty();
         }
     }
 
 //ajax magic
-    $(".p-label").click(function () {
+    $(".p-label").click(function (event) {
+        event.stopPropagation();
+        //console.log($(event.target).attr('class').indexOf('display-sub-varieties')>=0);
+        if(!$(event.target).attr('class').indexOf('display-sub-varieties')>=0){
+            //mobile pop-up show hide
+            $("#detail").addClass("show");
+            $(".tint").addClass("show");
+            $(".btn-close").addClass("show");
+            $("body").addClass("hidescroll");
 
-        //mobile pop-up show hide
-        $("#detail").addClass("show");
-        $(".tint").addClass("show");
-        $(".btn-close").addClass("show");
-        $("body").addClass("hidescroll");
 
+            //ajax magic
+            var button = $(this);
+            var id = $(this).attr('data-id');
 
-        //ajax magic
-        var button = $(this);
-        var id = $(this).attr('data-id');
+            data = {
+                'action': 'loadfood',
+                'query': ajax_food_params.posts,
+                'id': id
 
-        data = {
-            'action': 'loadfood',
-            'query': ajax_food_params.posts,
-            'id': id
+            };
 
-        };
-
-        call_ajax();
+            call_ajax();
+        }
     });
 
     function call_ajax() {
@@ -355,6 +360,25 @@ jQuery(document).ready(function ($) {
             }
         });
     }
+
+
+    // init main parent item visibility
+    $('#products').find('.parent-level-0').addClass('active');
+
+    $('#products .display-sub-varieties').click(function(){
+        var $this = $(this);
+        var thisSlug = $this.parents('.p-label').attr('data-slug');
+        //console.log(thisSlug);
+        if(!$this.hasClass('active')){
+            $('#products').find('*[data-direct-parent="'+thisSlug+'"]').addClass('active');
+            $this.text('Masquer les sous-variétés').addClass('active');
+        }
+        else{
+            $('#products').find('*[data-direct-parent="'+thisSlug+'"]').not('.parent-level-0').removeClass('active');
+            $this.text('Afficher les sous-variétés').removeClass('active');
+        }
+
+    });
 
 })
 ;

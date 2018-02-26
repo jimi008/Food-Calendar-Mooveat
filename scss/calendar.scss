@@ -169,6 +169,10 @@ body {
     z-index: 9999 !important;
     overflow-x: scroll;
     white-space: nowrap;
+    @include tablet{
+      white-space: normal;
+      overflow-x: visible;
+    }
     .checkbox-holder {
       .checkbox {
         display: inline-block;
@@ -226,9 +230,13 @@ body {
         .p-label {
           height: 50px;
           margin-bottom: 7px;
-          display: block;
+          /*display: block;*/
           text-decoration: none;
           cursor: pointer;
+          display: none;
+          &.active{
+            display: block;
+          }
 
           .image-holder {
             width: 40px;
@@ -255,6 +263,13 @@ body {
             font-size: 18px;
             font-weight: bold;
             line-height: 50px;
+            .display-sub-varieties{
+              font-size: 0.7em;
+              color: #777;
+              margin-left: 10px;
+              cursor: pointer;
+              padding: 8px 3px;
+            }
           }
           &.green {
             .p-text {
@@ -281,8 +296,13 @@ body {
           position: relative;
           z-index: 1;
           box-sizing: border-box;
-          display: block;
+          /*display: block;*/
+          display: none;
           margin-bottom: 7px;
+
+          &.active{
+            display: block;
+          }
 
           // Colors bar
 

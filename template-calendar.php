@@ -376,9 +376,11 @@ get_header('calendar');
                                             $image = get_field('image_produit_alimentaire');
                                             $size = 'thumbnail'; // (thumbnail, medium, large, full or custom size)
 
+                                            $parent_level = count(get_post_ancestors($post));
+
                                             ?>
                                             <!--product-->
-                                            <a class="p-label <?php echo $label_color; ?>"
+                                            <a class="p-label <?php echo $label_color . ' ' . 'parent-level-' . strval($parent_level); ?>"
                                                data-id="<?php echo get_the_ID(); ?>"
                                                data-family="<?php echo color_class('slug') ?>"
                                                data-slug="<?php echo $post->post_name; ?>"
@@ -390,7 +392,21 @@ get_header('calendar');
                                                              alt="<?php echo $image['alt']; ?>">
                                                     <?php endif; ?>
                                                 </div>
-                                                <div class="p-text"><?php the_title(); ?></div>
+                                                <div class="p-text">
+                                                    <?php the_title();
+
+                                                    $children_args = array(
+                                                        'post_parent' => $post->ID,
+                                                        'post_type'   => 'mve_produit_alim',
+                                                        'numberposts' => -1,
+                                                        'post_status' => 'publish'
+                                                    );
+                                                    $children = get_children( $children_args );
+                                                    if(count($children)>0){
+                                                        echo '<span class="display-sub-varieties">Afficher les sous-variétés</span>';
+                                                    }
+                                                    ?>
+                                                </div>
                                             </a>
 
                                         <?php endwhile; ?>
@@ -437,6 +453,8 @@ get_header('calendar');
                                                 while ($foods_query->have_posts()) : $foods_query->the_post();
                                                     $season = '';
 
+                                                    $parent_level = count(get_post_ancestors($post));
+
                                                     // check if the repeater field has rows of data
                                                     if (have_rows('calendrier_zone_geo')):
 
@@ -452,7 +470,7 @@ get_header('calendar');
                                                     $season_check = $season != 0 ? true : false;
                                                     $color = ($season_check == true) ? color_class():"";
 
-                                                        $cell = '<div class="cell ' . $color . '" 
+                                                        $cell = '<div class="cell ' . $color . ' parent-level-' . strval($parent_level) . '" 
                                                         data-season="' . $season . '" 
                                                         data-id="' . get_the_ID() . '" 
                                                         data-family="' . color_class('slug') . '"

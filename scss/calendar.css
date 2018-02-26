@@ -89,6 +89,10 @@ body {
     z-index: 9999 !important;
     overflow-x: scroll;
     white-space: nowrap; }
+    @media (max-width: 991px) {
+      #calendar .dropdown-holder {
+        white-space: normal;
+        overflow-x: visible; } }
     #calendar .dropdown-holder .checkbox-holder .checkbox {
       display: inline-block;
       margin: 0 10px; }
@@ -122,9 +126,12 @@ body {
         #calendar #products .row .product-labels .p-label {
           height: 50px;
           margin-bottom: 7px;
-          display: block;
+          /*display: block;*/
           text-decoration: none;
-          cursor: pointer; }
+          cursor: pointer;
+          display: none; }
+          #calendar #products .row .product-labels .p-label.active {
+            display: block; }
           #calendar #products .row .product-labels .p-label .image-holder {
             width: 40px;
             height: 40px;
@@ -147,6 +154,12 @@ body {
             font-size: 18px;
             font-weight: bold;
             line-height: 50px; }
+            #calendar #products .row .product-labels .p-label .p-text .display-sub-varieties {
+              font-size: 0.7em;
+              color: #777;
+              margin-left: 10px;
+              cursor: pointer;
+              padding: 8px 3px; }
           #calendar #products .row .product-labels .p-label.green .p-text {
             color: #a2c845; }
           #calendar #products .row .product-labels .p-label.orange .p-text {
@@ -163,8 +176,11 @@ body {
           position: relative;
           z-index: 1;
           box-sizing: border-box;
-          display: block;
+          /*display: block;*/
+          display: none;
           margin-bottom: 7px; }
+          #calendar #products .row .col .cell.active {
+            display: block; }
           #calendar #products .row .col .cell.peach {
             background: rgba(255, 151, 81, 0.3);
             color: #ffa266; }
