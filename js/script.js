@@ -183,18 +183,46 @@ jQuery(document).ready(function ($) {
 
     // Smooth scrolling for product detail
     function smooth_scrolling() {
+
+        var $target_div = $(".description"),
+            refTargetH = 0;
+
         $('.select-options li').on('click', function (e) {
             e.preventDefault();
             var href = $(this).attr('rel');
-            var current_div = $(href);
-            var target_div = $(".description");
-            var animateTo = target_div.scrollTop() - target_div.position().top + current_div.position().top;
+            var $current_div = $(href);
+
+            $target_div.find('dt,dd').removeClass('active');
+            $target_div.find('dd').hide();
+
+            var animateTo = $target_div.scrollTop() - $target_div.position().top + $current_div.position().top - parseInt($target_div.css('margin-top'));
             console.log(animateTo);
-            target_div.animate(
+
+            refTargetH = $target_div.height();
+            $target_div.addClass('auto-scrolling').find('.accordion').height(refTargetH+10000);
+
+            $target_div.animate(
                 {scrollTop: animateTo},
-                "slow"
+                "slow",function(){
+                    $current_div.trigger('accordionUpdate');
+                    setTimeout(function(){
+                        $target_div.removeClass('auto-scrolling');
+                    },800);
+                    //$target_div.find('.accordion').height(refTargetH);
+                }
             );
         });
+
+        $target_div.scroll(function(){
+            if(!$target_div.hasClass('auto-scrolling')){
+                $target_div.find('.accordion').height($target_div.find('.accordion dl').height()+100);
+            }
+        });
+
+        $('.accordion dt h2').click(function(){
+           $('#detail .select-options li[rel="#'+$(this).attr('id')+'"]').click();
+        });
+
     }
 
     //show-hide food rows desktop - checkbox
@@ -354,7 +382,7 @@ jQuery(document).ready(function ($) {
                         $('.description').css({'margin-top': productHeaderHeight, 'height': descriptionHeight});
 
                     }
-
+                    $(".accordion").accordion();
 
                 }
             }
@@ -380,6 +408,105 @@ jQuery(document).ready(function ($) {
 
     });
 
-})
-;
+    // init accordion system
 
+    $(".accordion").accordion();
+
+
+});
+
+
+/*** css animation support check ***/
+var supportAnimation = (function($){
+    var animation = false,
+        animationstring = 'animation',
+        keyframeprefix = '',
+        domPrefixes = 'Webkit Moz O ms Khtml'.split(' '),
+        pfx  = '',
+        elem = document.createElement('div');
+
+    if( elem.style.animationName !== undefined ) { animation = true; }
+
+    if( animation === false ) {
+        for( var i = 0; i < domPrefixes.length; i++ ) {
+            if( elem.style[ domPrefixes[i] + 'AnimationName' ] !== undefined ) {
+                pfx = domPrefixes[ i ];
+                animationstring = pfx + 'Animation';
+                keyframeprefix = '-' + pfx.toLowerCase() + '-';
+                animation = true;
+                break;
+            }
+        }
+    }
+
+    if(animation){
+        $('body').addClass('cssanimations');
+    }
+
+    return animation;
+})(jQuery);
+
+/*** accordion extended function ***/
+(function($) {
+// What does the accordion plugin do?
+    $.fn.accordion = function(options) {
+
+        //console.log('accordion init');
+        var elem = document.createElement('div');
+
+        if (!this.length) { return this; }
+
+        var opts = $.extend(true, {}, $.fn.accordion.defaults, options);
+
+        this.each(function() {
+            var $this = $(this).find('dl');
+
+            var $all_panels = $this.find("dd");
+
+            if(supportAnimation)
+            {
+                $this.find("dt:first .arrow").addClass('down-anim');
+            }
+            else
+            {
+                $this.find("dt:first .arrow").addClass('down');
+            }
+
+            $this.find("dt > a, dt > h2").on('accordionUpdate', function(event){
+
+                event.preventDefault();
+
+                if(!$(this).parent().hasClass('active'))
+                {
+
+                    $all_panels.slideUp();
+                    var $active = $('dl .active').removeClass('active');
+
+                    $(this).parent().next().slideDown().addClass('active');
+                    $(this).parent().addClass('active');
+
+                    if(supportAnimation)
+                    {
+                        $active.filter('dt').find('.arrow').removeClass('down-anim');
+                        $(this).parent().find('.arrow').addClass('down-anim');
+                    }
+                    else
+                    {
+                        $active.filter('dt').find('.arrow').removeClass('down');
+                        $(this).parent().find('.arrow').addClass('down');
+                    }
+                }
+
+            });
+
+        });
+
+        return this;
+    };
+
+// default options
+    $.fn.accordion.defaults = {};
+
+    // call plugin
+
+})(jQuery);

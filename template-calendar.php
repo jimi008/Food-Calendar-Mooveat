@@ -388,8 +388,8 @@ get_header('calendar');
                                             >
                                                 <div class="image-holder">
                                                     <?php if (!empty($image)): ?>
-                                                        <img src="<?php echo $image['url']; ?>"
-                                                             alt="<?php echo $image['alt']; ?>">
+                                                        <img src="<?php if($image) echo $image['sizes'][ $size ]; ?>"
+                                                             alt="<?php if($image) echo $image['alt']; ?>">
                                                     <?php endif; ?>
                                                 </div>
                                                 <div class="p-text">
