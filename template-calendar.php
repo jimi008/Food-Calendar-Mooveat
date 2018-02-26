@@ -381,7 +381,8 @@ get_header('calendar');
                                             <a class="p-label <?php echo $label_color; ?>"
                                                data-id="<?php echo get_the_ID(); ?>"
                                                data-family="<?php echo color_class('slug') ?>"
-                                            data-slug="<?php echo $post->post_name; ?>"
+                                               data-slug="<?php echo $post->post_name; ?>"
+                                               data-direct-parent = "<?php echo get_post_field( 'post_name', get_post_ancestors($post)[0] ); ?>"
                                             >
                                                 <div class="image-holder">
                                                     <?php if (!empty($image)): ?>
@@ -455,7 +456,8 @@ get_header('calendar');
                                                         data-season="' . $season . '" 
                                                         data-id="' . get_the_ID() . '" 
                                                         data-family="' . color_class('slug') . '"
-                                                        data-slug="' . $post->post_name . '"></div>';
+                                                        data-slug="' . $post->post_name . '"' . '
+                                                        data-direct-parent = "'. get_post_field( "post_name", get_post_ancestors($post)[0] ) . '"></div>';
 
                                                         echo $cell;
 

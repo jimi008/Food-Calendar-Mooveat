@@ -127,7 +127,7 @@
 
         <div class="row">
             <div class="col-xs-4 col-sm-2 col-md-3 fp-img">
-                <div class="image-holder">
+                <div class="image-holder" style="background-image: url(<?php echo $image['url']; ?>);">
                     <?php if (!empty($image)): ?>
                         <img src="<?php echo $image['url']; ?>"
                              alt="<?php echo $image['alt']; ?>">
@@ -143,7 +143,7 @@
                 <form action="#">
                     <select title="Select heading" name="#" id="category-selector" class="select-dropdown custom-select"
                     >
-                        <option value="1">Select</option>
+                        <option value="1">Choisir le chapitre</option>
 
                         <?php
                         foreach ($fields_tabs as $tab => $fields) {

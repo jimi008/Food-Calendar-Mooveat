@@ -223,8 +223,10 @@ jQuery(document).ready(function ($) {
     });
 
     //Search auto-complete jQuery UI
-    var $search_input = $('#header-search-bar-input');
-    var $search_value = $("#header-search-bar-value");
+    var $search_input = $('#header-search-bar-input'),
+        $search_value = $("#header-search-bar-value"),
+        data;
+
     $search_input.autocomplete({
         source: availableFood,
         select: function (event, ui) {
@@ -264,11 +266,16 @@ jQuery(document).ready(function ($) {
     function searchResults() {
         var search_selection = $search_value.val();
         if (search_selection) {
-            var $rows = $('.p-label[data-slug*=' + search_selection + ']');
-            var $cell = $('.cell[data-slug*=' + search_selection + ']');
+            var $rows = $('.p-label[data-slug*=' + search_selection + ']'),
+                $cell = $('.cell[data-slug*=' + search_selection + ']'),
+                $childrenRows = $('.p-label[data-direct-parent*=' + search_selection + ']'),
+                $childrenCell = $('.cell[data-direct-parent*=' + search_selection + ']');
+
             $('.p-label, .cell').hide();
             $rows.show();
             $cell.show();
+            $childrenRows.show();
+            $childrenCell.show();
 
             //ajax magic
             var button = $(this);
