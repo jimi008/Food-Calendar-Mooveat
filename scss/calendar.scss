@@ -125,7 +125,7 @@ body {
 
 #calendar {
   box-sizing: border-box;
-  margin-top: 80px;
+  //margin-top: 80px;
 
   @include desktop {
     height: calc(100vh - 95px);
@@ -187,10 +187,10 @@ body {
 
   .cal-wrap {
     overflow-y: scroll;
-    height: calc(100vh - 100px);
+    height: calc(100vh - 65px);
     @include desktop {
 
-      //height: calc(100vh - 130px);
+      height: calc(100vh - 130px);
     }
   }
   .cal-head {
@@ -389,6 +389,7 @@ body {
   text-decoration: none !important;
   z-index: 9999999;
   opacity: 0;
+  cursor: pointer;
 
   @include tablet {
     &.show {
@@ -607,14 +608,15 @@ body {
 
     #detail-header {
       //border:1px solid blue;
-      position: fixed;
-      left: 20px;
-      right: 20px;
-      padding-left: 10px;
-      padding-right: 10px;
+      //position: fixed;
+      //left: 20px;
+      //right: 20px;
+      //padding-left: 10px;
+      //padding-right: 10px;
       top: 20px;
-      padding-top: 10px;
+      //padding-top: 10px;
       z-index: 9999;
+      //margin-bottom: 20px;
 
     }
 
@@ -1173,6 +1175,7 @@ $top-header-bar-zindex: 1000;
   top: 0;
   left: 0;
   position: absolute;
+  padding: 0 !important;
   /*@include full-height-parent;*/
 
   #masthead {
@@ -1217,8 +1220,8 @@ $top-header-bar-zindex: 1000;
     .wf-loading & {
       @include opacity(0);
     }
-    //position: fixed;
-    position: absolute;
+    position: relative;
+    //position: absolute;
     z-index: $top-header-bar-zindex;
     top: 0;
     right: 0;
@@ -1263,15 +1266,17 @@ $top-header-bar-zindex: 1000;
     @media (max-width: 767px) {
       top: -1*$header-height + px;
       @include opacity(0);
+      display: none;
     }
 
   }
 
   #header-search-bar {
-    position: absolute;
+    //position: absolute;
+    position: relative;
     width: 100%;
     height: $header-search-bar-height + px;
-    top: $header-height + px;
+    //top: $header-height + px;
     left: 0;
     padding: 0 15px;
     text-align: center;

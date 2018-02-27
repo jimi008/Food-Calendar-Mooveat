@@ -87,38 +87,27 @@ jQuery(document).ready(function ($) {
 
     });
 
+function dynamicWidthHeight () {
+    var $calWrapper = $('.cal-wrap');
+    var $calWrapperW = $calWrapper.width();
+    var $calWrapperH = $calWrapper.height();
+    // set calendar header width
+    $('.cal-head').css('width', $calWrapperW);
 
-// $( window ).resize(function() {
-//     if(window.innerWidth > 992)
-//     {
-//         $("#detail").css("paddingTop",0);
-//
-//     }
-//     else if (window.innerWidth < 992)
-//     {
-//         var h = $("#detail-header").height();
-//         $("#detail").css("paddingTop", h + 10);
-//     }
-//
-// });
+    var $headerHeight = $('#top-header-bar').height() + $('#header-search-bar').height();
+    var $footerHeight = $('#colophon').outerHeight();
+    var $headerFooterHeight = $headerHeight + $footerHeight;
+    // set calendar wrapper height
+    $calWrapper.height($(window).height()-$headerFooterHeight);
+    if (window.innerWidth < 767) {
+        $calWrapper.height($(window).height()-$('#header-search-bar').height());
 
-
-// sticky
-
-
-    // $("#month-bar").sticky({topSpacing: 0});
-    //
-    // $("#dropdown-holder").sticky({topSpacing: 70});
-    // $("#detail-header").sticky({topSpacing: 0});
-    var calWrapper = $('.cal-wrap');
-    var calWrapperWidth = calWrapper.width();
-    var calWrapperHeight = calWrapper.height();
-    $('.cal-head').css('width', calWrapperWidth);
+    }
+}
+    dynamicWidthHeight();
 
     $(window).resize(function () {
-        var calWrapper = $('.cal-wrap');
-        var calWrapperWidth = calWrapper.width();
-        $('.cal-head').css('width', calWrapperWidth);
+        dynamicWidthHeight();
     });
 
 // custom Select
@@ -333,15 +322,26 @@ jQuery(document).ready(function ($) {
                     $('.ajaxed-data').html(data); // insert new posts
                     custom_select('food-fields');
                     smooth_scrolling();
-                    var productHeader = $('#detail-header');
-                    var productHeaderHeight = productHeader.height();
-                    var descriptionHeight = productWrapper.height() - productHeaderHeight;
-                    var dDescHeight = calWrapperHeight - productHeaderHeight;
-                    $('.description').css('height', dDescHeight);
-                    if (window.innerWidth < 992) {
-                        $('.description').css({'margin-top': productHeaderHeight, 'height': descriptionHeight});
 
+                    function productDesHeight(){
+                        var productHeader = $('#detail-header');
+                        var pHeaderHeight = productHeader.height();
+                        var descriptionHeight = productWrapper.height() - pHeaderHeight;
+                        var $calWrapperH = $('.cal-wrap').height();
+                        var dDescHeight = $calWrapperH - pHeaderHeight;
+                        $('.description').css('height', dDescHeight);
+                        if (window.innerWidth < 992) {
+                            $('.description').css({'height': descriptionHeight});
+
+                        }
                     }
+
+                    productDesHeight();
+
+                    $(window).resize(function () {
+                        productDesHeight();
+                    });
+
 
 
                 }
