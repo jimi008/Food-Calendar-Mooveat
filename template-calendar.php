@@ -305,7 +305,7 @@ get_header('calendar');
 
                                 <select title="Select product family" name="#" id="family-selector-m"
                                         class="select-dropdown custom-select">
-                                    <option value="1">Select</option>
+                                    <option value="1">Choisir une famille</option>
 
                                     <?php foreach ($terms as $term) : ?>
 

@@ -156,7 +156,6 @@ jQuery(document).ready(function ($) {
 
             $styledSelect.click(function (e) {
                 e.stopPropagation();
-                resetSubVarietiesDisplay();
                 $('div.select-styled.active').not(this).each(function () {
                     $(this).removeClass('active').next('ul.select-options').hide();
                 });
@@ -165,7 +164,6 @@ jQuery(document).ready(function ($) {
 
             $listItems.click(function (e) {
                 e.stopPropagation();
-                resetSubVarietiesDisplay();
                 $styledSelect.text($(this).text()).removeClass('active');
                 $this.val($(this).attr('rel'));
                 $list.hide();
