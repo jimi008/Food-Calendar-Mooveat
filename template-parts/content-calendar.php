@@ -253,7 +253,7 @@
 
             $active_class = $index==0? 'active':'';
 
-            echo '<dt class="' . $active_class . '"><h2 id="' . $fields[0] . '">' . $tab . '</h2></dt>';
+            echo '<dt class="' . $active_class . '"><h2 id="' . $fields[0] . '"><span class="arrow"></span>' . $tab . '</h2></dt>';
         }
 
         echo '<dd class="'. $active_class .'">';

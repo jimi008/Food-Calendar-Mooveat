@@ -156,6 +156,7 @@ jQuery(document).ready(function ($) {
 
             $styledSelect.click(function (e) {
                 e.stopPropagation();
+                resetSubVarietiesDisplay();
                 $('div.select-styled.active').not(this).each(function () {
                     $(this).removeClass('active').next('ul.select-options').hide();
                 });
@@ -164,10 +165,11 @@ jQuery(document).ready(function ($) {
 
             $listItems.click(function (e) {
                 e.stopPropagation();
+                resetSubVarietiesDisplay();
                 $styledSelect.text($(this).text()).removeClass('active');
                 $this.val($(this).attr('rel'));
                 $list.hide();
-                $($this).trigger("change");
+                $this.trigger("change");
                 //console.log($this.val());
             });
 
@@ -226,28 +228,34 @@ jQuery(document).ready(function ($) {
     }
 
     //show-hide food rows desktop - checkbox
-    $("input[type=checkbox]").change(function () {
-        var data_family = $(this).attr('data-family');
-        var $rows = $('.p-label[data-family=' + data_family + ']');
-        var $cell = $('.cell[data-family=' + data_family + ']');
-        if (this.checked) {
-            $rows.addClass('active');
-            $cell.addClass('active');
-        } else {
-            $rows.removeClass('active');
-            $cell.removeClass('active');
-        }
+    $(".cal-head input[type=checkbox]").change(function () {
+        resetSubVarietiesDisplay();
+        resetSearchInput();
+        $(".cal-head input[type=checkbox]").each(function(){
+            var data_family = $(this).attr('data-family');
+            var $rows = $('.p-label[data-family=' + data_family + ']');
+            var $cell = $('.cell[data-family=' + data_family + ']');
+            if (this.checked) {
+                $rows.filter('.parent-level-0').addClass('active');
+                $cell.filter('.parent-level-0').addClass('active');
+            } else {
+                $rows.removeClass('active');
+                $cell.removeClass('active');
+            }
+        });
     });
 
     //show-hide food rows mobile - select field
     $("#family-selector-m").change(function () {
+        resetSubVarietiesDisplay();
+        resetSearchInput();
         var data_family = $(this).val();
         var $rows = $('.p-label[data-family=' + data_family + ']');
         var $cell = $('.cell[data-family=' + data_family + ']');
         $('.p-label').removeClass('active');
         $('.cell').removeClass('active');
-        $rows.addClass('active');
-        $cell.addClass('active');
+        $rows.filter('.parent-level-0').addClass('active');
+        $cell.filter('.parent-level-0').addClass('active');
     });
 
     //Search auto-complete jQuery UI
@@ -300,7 +308,7 @@ jQuery(document).ready(function ($) {
                 $childrenCell = $('.cell[data-direct-parent*=' + search_selection + ']');
 
             $('.p-label, .cell').removeClass('active');
-            $('#products .display-sub-varieties').text('Masquer les sous-variétés').addClass('active');
+            $('#products .display-sub-varieties').text('[-] Masquer variétés').addClass('active');
 
             $rows.addClass('active');
             $cell.addClass('active');
@@ -332,8 +340,9 @@ jQuery(document).ready(function ($) {
     $(".p-label").click(function (event) {
         event.stopPropagation();
         //console.log($(event.target).attr('class').indexOf('display-sub-varieties')>=0);
-        if(!$(event.target).attr('class').indexOf('display-sub-varieties')>=0){
+        if(!$(event.target).attr('class').indexOf('display-sub-varieties')>=0 && !$(event.target).hasClass('display-sub-varieties')){
             //mobile pop-up show hide
+            console.log($(event.target).attr('class'));
             $("#detail").addClass("show");
             $(".tint").addClass("show");
             $(".btn-close").addClass("show");
@@ -399,17 +408,26 @@ jQuery(document).ready(function ($) {
         //console.log(thisSlug);
         if(!$this.hasClass('active')){
             $('#products').find('*[data-direct-parent="'+thisSlug+'"]').addClass('active');
-            $this.text('Masquer les sous-variétés').addClass('active');
+            $this.text('[-] Masquer variétés').addClass('active');
         }
         else{
             $('#products').find('*[data-direct-parent="'+thisSlug+'"]').not('.parent-level-0').removeClass('active');
-            $this.text('Afficher les sous-variétés').removeClass('active');
+            $this.text('[+] Afficher variétés').removeClass('active');
         }
 
     });
 
-    // init accordion system
+    function resetSubVarietiesDisplay(){
+        var $products = $('#products');
+        $products.find('.p-label,.cell').not('.parent-level-0').removeClass('active');
+        $products.find('.display-sub-varieties').text('[+] Afficher variétés').removeClass('active');
+    }
 
+    function resetSearchInput(){
+        $('#header-search-bar-input').val('');
+    }
+
+    // init accordion system
     $(".accordion").accordion();
 
 
@@ -487,11 +505,13 @@ var supportAnimation = (function($){
 
                     if(supportAnimation)
                     {
+                        $this.find('dt .arrow').removeClass('down-anim');
                         $active.filter('dt').find('.arrow').removeClass('down-anim');
                         $(this).parent().find('.arrow').addClass('down-anim');
                     }
                     else
                     {
+                        $this.find('dt .arrow').removeClass('down');
                         $active.filter('dt').find('.arrow').removeClass('down');
                         $(this).parent().find('.arrow').addClass('down');
                     }

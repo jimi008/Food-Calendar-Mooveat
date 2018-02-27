@@ -921,7 +921,7 @@ function fc_enqueue_asset() {
 
     wp_localize_script( 'ajax-food', 'ajax_food_params', array(
         'ajaxurl' => admin_url( 'admin-ajax.php' ),
-        'posts' => json_encode( $wp_query->query_vars )
+        'posts' => '' //json_encode( $wp_query->query_vars ) // warning unsecure and unused
     ) );
 
     wp_enqueue_script( 'ajax-food' );
@@ -935,7 +935,7 @@ add_action( 'wp_enqueue_scripts', 'fc_enqueue_asset' );
  */
 function food_products_ajax_handler(){
 
-    $args = json_decode( stripslashes( $_POST['query'] ), true );
+    //$args = json_decode( stripslashes( $_POST['query'] ), true );
     $food_post_id = $_POST['id'];
 
     $args = array(

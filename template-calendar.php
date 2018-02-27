@@ -186,11 +186,10 @@ get_header('calendar');
             </div>
             <div id="header-search-bar-input-container" class="ui-front scrollable">
                 <i class="icon-infos-pratiques popup-search-info"></i>
-                <input type="text" placeholder="Recherche" id="header-search-bar-input" class="map-search-input">
+                <input type="text" placeholder="Rechercher un produit alimentaire" id="header-search-bar-input" class="map-search-input">
                 <input type="hidden" id="header-search-bar-value">
                 <div class="placeholder-mask">
-                    <div class="layer">Saisissez une adresse complète ou des mots clés parmi les propositions qui
-                        s'afficheront (mots clés séparés par un point-virgule)
+                    <div class="layer">Saisissez un nom de produit alimentaire
                     </div>
                 </div>
                 <div id="header-search-trigger" class="icon-loupe"></div>
@@ -403,7 +402,7 @@ get_header('calendar');
                                                     );
                                                     $children = get_children( $children_args );
                                                     if(count($children)>0){
-                                                        echo '<span class="display-sub-varieties">Afficher les sous-variétés</span>';
+                                                        echo '<span class="display-sub-varieties">[+] Afficher variétés</span>';
                                                     }
                                                     ?>
                                                 </div>
