@@ -156,7 +156,7 @@ function dynamicWidthHeight () {
                 $styledSelect.text($(this).text()).removeClass('active');
                 $this.val($(this).attr('rel'));
                 $list.hide();
-                $($this).trigger("change");
+                $this.trigger("change");
                 //console.log($this.val());
             });
 
@@ -172,48 +172,84 @@ function dynamicWidthHeight () {
 
     // Smooth scrolling for product detail
     function smooth_scrolling() {
+
+        var $target_div = $(".description"),
+            refTargetH = 0;
+
         $('.select-options li').on('click', function (e) {
             e.preventDefault();
             var href = $(this).attr('rel');
-            var current_div = $(href);
-            var target_div = $(".description");
-            var animateTo = target_div.scrollTop() - target_div.position().top + current_div.position().top;
+            var $current_div = $(href);
+
+            $target_div.find('dt,dd').removeClass('active');
+            $target_div.find('dd').hide();
+
+            var animateTo = $target_div.scrollTop() - $target_div.position().top + $current_div.position().top - parseInt($target_div.css('margin-top'));
             console.log(animateTo);
-            target_div.animate(
+
+            refTargetH = $target_div.height();
+            $target_div.addClass('auto-scrolling').find('.accordion').height(refTargetH+10000);
+
+            $target_div.animate(
                 {scrollTop: animateTo},
-                "slow"
+                "slow",function(){
+                    $current_div.trigger('accordionUpdate');
+                    setTimeout(function(){
+                        $target_div.removeClass('auto-scrolling');
+                    },800);
+                    //$target_div.find('.accordion').height(refTargetH);
+                }
             );
         });
+
+        $target_div.scroll(function(){
+            if(!$target_div.hasClass('auto-scrolling')){
+                $target_div.find('.accordion').height($target_div.find('.accordion dl').height()+100);
+            }
+        });
+
+        $('.accordion dt h2').click(function(){
+           $('#detail .select-options li[rel="#'+$(this).attr('id')+'"]').click();
+        });
+
     }
 
     //show-hide food rows desktop - checkbox
-    $("input[type=checkbox]").change(function () {
-        var data_family = $(this).attr('data-family');
-        var $rows = $('.p-label[data-family=' + data_family + ']');
-        var $cell = $('.cell[data-family=' + data_family + ']');
-        if (this.checked) {
-            $rows.show();
-            $cell.show();
-        } else {
-            $rows.hide();
-            $cell.hide();
-        }
+    $(".cal-head input[type=checkbox]").change(function () {
+        resetSubVarietiesDisplay();
+        resetSearchInput();
+        $(".cal-head input[type=checkbox]").each(function(){
+            var data_family = $(this).attr('data-family');
+            var $rows = $('.p-label[data-family=' + data_family + ']');
+            var $cell = $('.cell[data-family=' + data_family + ']');
+            if (this.checked) {
+                $rows.filter('.parent-level-0').addClass('active');
+                $cell.filter('.parent-level-0').addClass('active');
+            } else {
+                $rows.removeClass('active');
+                $cell.removeClass('active');
+            }
+        });
     });
 
     //show-hide food rows mobile - select field
     $("#family-selector-m").change(function () {
+        resetSubVarietiesDisplay();
+        resetSearchInput();
         var data_family = $(this).val();
         var $rows = $('.p-label[data-family=' + data_family + ']');
         var $cell = $('.cell[data-family=' + data_family + ']');
-        $('.p-label').hide();
-        $('.cell').hide();
-        $rows.show();
-        $cell.show();
+        $('.p-label').removeClass('active');
+        $('.cell').removeClass('active');
+        $rows.filter('.parent-level-0').addClass('active');
+        $cell.filter('.parent-level-0').addClass('active');
     });
 
     //Search auto-complete jQuery UI
-    var $search_input = $('#header-search-bar-input');
-    var $search_value = $("#header-search-bar-value");
+    var $search_input = $('#header-search-bar-input'),
+        $search_value = $("#header-search-bar-value"),
+        data;
+
     $search_input.autocomplete({
         source: availableFood,
         select: function (event, ui) {
@@ -239,7 +275,7 @@ function dynamicWidthHeight () {
     $search_input.on('input', function () {
         var search_selection = $(this).val();
         if (!search_selection) {
-            $('.p-label, .cell').show();
+            $('.p-label, .cell').addClass('active');
             $search_value.val('');
         }
     });
@@ -253,11 +289,18 @@ function dynamicWidthHeight () {
     function searchResults() {
         var search_selection = $search_value.val();
         if (search_selection) {
-            var $rows = $('.p-label[data-slug*=' + search_selection + ']');
-            var $cell = $('.cell[data-slug*=' + search_selection + ']');
-            $('.p-label, .cell').hide();
-            $rows.show();
-            $cell.show();
+            var $rows = $('.p-label[data-slug*=' + search_selection + ']'),
+                $cell = $('.cell[data-slug*=' + search_selection + ']'),
+                $childrenRows = $('.p-label[data-direct-parent*=' + search_selection + ']'),
+                $childrenCell = $('.cell[data-direct-parent*=' + search_selection + ']');
+
+            $('.p-label, .cell').removeClass('active');
+            $('#products .display-sub-varieties').text('[-] Masquer variétés').addClass('active');
+
+            $rows.addClass('active');
+            $cell.addClass('active');
+            $childrenRows.addClass('active');
+            $childrenCell.addClass('active');
 
             //ajax magic
             var button = $(this);
@@ -275,33 +318,37 @@ function dynamicWidthHeight () {
 
 
         } else {
-            $('.p-label, .cell').show();
+            $('.p-label, .cell').addClass('active');
             $('.ajaxed-data').empty();
         }
     }
 
 //ajax magic
-    $(".p-label").click(function () {
+    $(".p-label").click(function (event) {
+        event.stopPropagation();
+        //console.log($(event.target).attr('class').indexOf('display-sub-varieties')>=0);
+        if(!$(event.target).attr('class').indexOf('display-sub-varieties')>=0 && !$(event.target).hasClass('display-sub-varieties')){
+            //mobile pop-up show hide
+            console.log($(event.target).attr('class'));
+            $("#detail").addClass("show");
+            $(".tint").addClass("show");
+            $(".btn-close").addClass("show");
+            $("body").addClass("hidescroll");
 
-        //mobile pop-up show hide
-        $("#detail").addClass("show");
-        $(".tint").addClass("show");
-        $(".btn-close").addClass("show");
-        $("body").addClass("hidescroll");
 
+            //ajax magic
+            var button = $(this);
+            var id = $(this).attr('data-id');
 
-        //ajax magic
-        var button = $(this);
-        var id = $(this).attr('data-id');
+            data = {
+                'action': 'loadfood',
+                'query': ajax_food_params.posts,
+                'id': id
 
-        data = {
-            'action': 'loadfood',
-            'query': ajax_food_params.posts,
-            'id': id
+            };
 
-        };
-
-        call_ajax();
+            call_ajax();
+        }
     });
 
     function call_ajax() {
@@ -335,20 +382,148 @@ function dynamicWidthHeight () {
 
                         }
                     }
-
                     productDesHeight();
 
                     $(window).resize(function () {
                         productDesHeight();
                     });
 
-
+                    $(".accordion").accordion();
 
                 }
             }
         });
     }
 
-})
-;
 
+    // init main parent item visibility
+    $('#products').find('.parent-level-0').addClass('active');
+
+    $('#products .display-sub-varieties').click(function(){
+        var $this = $(this);
+        var thisSlug = $this.parents('.p-label').attr('data-slug');
+        //console.log(thisSlug);
+        if(!$this.hasClass('active')){
+            $('#products').find('*[data-direct-parent="'+thisSlug+'"]').addClass('active');
+            $this.text('[-] Masquer variétés').addClass('active');
+        }
+        else{
+            $('#products').find('*[data-direct-parent="'+thisSlug+'"]').not('.parent-level-0').removeClass('active');
+            $this.text('[+] Afficher variétés').removeClass('active');
+        }
+
+    });
+
+    function resetSubVarietiesDisplay(){
+        var $products = $('#products');
+        $products.find('.p-label,.cell').not('.parent-level-0').removeClass('active');
+        $products.find('.display-sub-varieties').text('[+] Afficher variétés').removeClass('active');
+    }
+
+    function resetSearchInput(){
+        $('#header-search-bar-input').val('');
+    }
+
+    // init accordion system
+    $(".accordion").accordion();
+
+
+});
+
+
+/*** css animation support check ***/
+var supportAnimation = (function($){
+    var animation = false,
+        animationstring = 'animation',
+        keyframeprefix = '',
+        domPrefixes = 'Webkit Moz O ms Khtml'.split(' '),
+        pfx  = '',
+        elem = document.createElement('div');
+
+    if( elem.style.animationName !== undefined ) { animation = true; }
+
+    if( animation === false ) {
+        for( var i = 0; i < domPrefixes.length; i++ ) {
+            if( elem.style[ domPrefixes[i] + 'AnimationName' ] !== undefined ) {
+                pfx = domPrefixes[ i ];
+                animationstring = pfx + 'Animation';
+                keyframeprefix = '-' + pfx.toLowerCase() + '-';
+                animation = true;
+                break;
+            }
+        }
+    }
+
+    if(animation){
+        $('body').addClass('cssanimations');
+    }
+
+    return animation;
+})(jQuery);
+
+/*** accordion extended function ***/
+(function($) {
+// What does the accordion plugin do?
+    $.fn.accordion = function(options) {
+
+        //console.log('accordion init');
+        var elem = document.createElement('div');
+
+        if (!this.length) { return this; }
+
+        var opts = $.extend(true, {}, $.fn.accordion.defaults, options);
+
+        this.each(function() {
+            var $this = $(this).find('dl');
+
+            var $all_panels = $this.find("dd");
+
+            if(supportAnimation)
+            {
+                $this.find("dt:first .arrow").addClass('down-anim');
+            }
+            else
+            {
+                $this.find("dt:first .arrow").addClass('down');
+            }
+
+            $this.find("dt > a, dt > h2").on('accordionUpdate', function(event){
+
+                event.preventDefault();
+
+                if(!$(this).parent().hasClass('active'))
+                {
+
+                    $all_panels.slideUp();
+                    var $active = $('dl .active').removeClass('active');
+
+                    $(this).parent().next().slideDown().addClass('active');
+                    $(this).parent().addClass('active');
+
+                    if(supportAnimation)
+                    {
+                        $this.find('dt .arrow').removeClass('down-anim');
+                        $active.filter('dt').find('.arrow').removeClass('down-anim');
+                        $(this).parent().find('.arrow').addClass('down-anim');
+                    }
+                    else
+                    {
+                        $this.find('dt .arrow').removeClass('down');
+                        $active.filter('dt').find('.arrow').removeClass('down');
+                        $(this).parent().find('.arrow').addClass('down');
+                    }
+                }
+
+            });
+
+        });
+
+        return this;
+    };
+
+// default options
+    $.fn.accordion.defaults = {};
+
+    // call plugin
+
+})(jQuery);

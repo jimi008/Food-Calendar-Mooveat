@@ -126,15 +126,15 @@
     <div class="head">
 
         <div class="row">
-            <div class="col-xs-4 col-sm-2 col-md-3 fp-img">
-                <div class="image-holder">
+            <div class="col-xs-4 col-sm-2 col-md-3 col-lg-3 fp-img">
+                <div class="image-holder" style="background-image: url(<?php if($image) echo $image['sizes'][ $size ]; ?>);">
                     <?php if (!empty($image)): ?>
-                        <img src="<?php echo $image['url']; ?>"
+                        <img src="<?php if($image) echo $image['sizes'][ $size ]; ?>"
                              alt="<?php echo $image['alt']; ?>">
                     <?php endif; ?>
                 </div>
             </div>
-            <div class="col-xs-8 col-sm-10 col-md-9 no-padding fp-title">
+            <div class="col-xs-8 col-sm-10 col-md-8 col-lg-9 no-padding fp-title">
                 <div class="product-title">
                     <?php the_title(); ?>
                 </div>
@@ -143,7 +143,7 @@
                 <form action="#">
                     <select title="Select heading" name="#" id="category-selector" class="select-dropdown custom-select"
                     >
-                        <option value="1">Select</option>
+                        <option value="1">Choisir le chapitre</option>
 
                         <?php
                         foreach ($fields_tabs as $tab => $fields) {
@@ -243,12 +243,20 @@
 
     <?php
 
+    echo '<div class="accordion"><dl>';
+
+    $index = 0;
+
     foreach ($fields_tabs as $tab => $fields) {
 
         if (fc_check_fields($fields)) {
-            echo '<h2 id="' . $fields[0] . '">' . $tab . '</h2>';
+
+            $active_class = $index==0? 'active':'';
+
+            echo '<dt class="' . $active_class . '"><h2 id="' . $fields[0] . '"><span class="arrow"></span>' . $tab . '</h2></dt>';
         }
 
+        echo '<dd class="'. $active_class .'">';
         foreach ($fields as $field) {
 
             $field_obj = get_field_object($field);
@@ -369,8 +377,13 @@
             }
 
         }
+        echo '</dd>';
+
+        $index++;
 
     }
+
+    echo '</dl></div>';
 
     ?>
 

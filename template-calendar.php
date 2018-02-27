@@ -186,11 +186,10 @@ get_header('calendar');
             </div>
             <div id="header-search-bar-input-container" class="ui-front scrollable">
                 <i class="icon-infos-pratiques popup-search-info"></i>
-                <input type="text" placeholder="Recherche" id="header-search-bar-input" class="map-search-input">
+                <input type="text" placeholder="Rechercher un produit alimentaire" id="header-search-bar-input" class="map-search-input">
                 <input type="hidden" id="header-search-bar-value">
                 <div class="placeholder-mask">
-                    <div class="layer">Saisissez une adresse complète ou des mots clés parmi les propositions qui
-                        s'afficheront (mots clés séparés par un point-virgule)
+                    <div class="layer">Saisissez un nom de produit alimentaire
                     </div>
                 </div>
                 <div id="header-search-trigger" class="icon-loupe"></div>
@@ -306,7 +305,7 @@ get_header('calendar');
 
                                 <select title="Select product family" name="#" id="family-selector-m"
                                         class="select-dropdown custom-select">
-                                    <option value="1">Select</option>
+                                    <option value="1">Choisir une famille</option>
 
                                     <?php foreach ($terms as $term) : ?>
 
@@ -376,20 +375,37 @@ get_header('calendar');
                                             $image = get_field('image_produit_alimentaire');
                                             $size = 'thumbnail'; // (thumbnail, medium, large, full or custom size)
 
+                                            $parent_level = count(get_post_ancestors($post));
+
                                             ?>
                                             <!--product-->
-                                            <a class="p-label <?php echo $label_color; ?>"
+                                            <a class="p-label <?php echo $label_color . ' ' . 'parent-level-' . strval($parent_level); ?>"
                                                data-id="<?php echo get_the_ID(); ?>"
                                                data-family="<?php echo color_class('slug') ?>"
-                                            data-slug="<?php echo $post->post_name; ?>"
+                                               data-slug="<?php echo $post->post_name; ?>"
+                                               data-direct-parent = "<?php echo get_post_field( 'post_name', get_post_ancestors($post)[0] ); ?>"
                                             >
                                                 <div class="image-holder">
                                                     <?php if (!empty($image)): ?>
-                                                        <img src="<?php echo $image['url']; ?>"
-                                                             alt="<?php echo $image['alt']; ?>">
+                                                        <img src="<?php if($image) echo $image['sizes'][ $size ]; ?>"
+                                                             alt="<?php if($image) echo $image['alt']; ?>">
                                                     <?php endif; ?>
                                                 </div>
-                                                <div class="p-text"><?php the_title(); ?></div>
+                                                <div class="p-text">
+                                                    <?php the_title();
+
+                                                    $children_args = array(
+                                                        'post_parent' => $post->ID,
+                                                        'post_type'   => 'mve_produit_alim',
+                                                        'numberposts' => -1,
+                                                        'post_status' => 'publish'
+                                                    );
+                                                    $children = get_children( $children_args );
+                                                    if(count($children)>0){
+                                                        echo '<span class="display-sub-varieties">[+] Afficher variétés</span>';
+                                                    }
+                                                    ?>
+                                                </div>
                                             </a>
 
                                         <?php endwhile; ?>
@@ -436,6 +452,8 @@ get_header('calendar');
                                                 while ($foods_query->have_posts()) : $foods_query->the_post();
                                                     $season = '';
 
+                                                    $parent_level = count(get_post_ancestors($post));
+
                                                     // check if the repeater field has rows of data
                                                     if (have_rows('calendrier_zone_geo')):
 
@@ -451,11 +469,12 @@ get_header('calendar');
                                                     $season_check = $season != 0 ? true : false;
                                                     $color = ($season_check == true) ? color_class():"";
 
-                                                        $cell = '<div class="cell ' . $color . '" 
+                                                        $cell = '<div class="cell ' . $color . ' parent-level-' . strval($parent_level) . '" 
                                                         data-season="' . $season . '" 
                                                         data-id="' . get_the_ID() . '" 
                                                         data-family="' . color_class('slug') . '"
-                                                        data-slug="' . $post->post_name . '"></div>';
+                                                        data-slug="' . $post->post_name . '"' . '
+                                                        data-direct-parent = "'. get_post_field( "post_name", get_post_ancestors($post)[0] ) . '"></div>';
 
                                                         echo $cell;
 
